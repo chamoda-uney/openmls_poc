@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* openmls_pocTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* openmls_pocTests.m */; };
+		02516AC62C4699E7000E9270 /* OpenMLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02516AC52C4699E7000E9270 /* OpenMLS.swift */; };
+		02516AC82C469A73000E9270 /* OpenMLS.m in Sources */ = {isa = PBXBuildFile; fileRef = 02516AC72C469A73000E9270 /* OpenMLS.m */; };
+		02516AD82C490D15000E9270 /* OpenMLSReactNativePOC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02516AD62C490D15000E9270 /* OpenMLSReactNativePOC.xcframework */; };
+		02516AD92C490D15000E9270 /* OpenMLSReactNativePOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02516AD72C490D15000E9270 /* OpenMLSReactNativePOC.swift */; };
 		0C80B921A6F3F58F76C31292 /* libPods-openmls_poc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-openmls_poc.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -31,6 +35,11 @@
 		00E356EE1AD99517003FC87E /* openmls_pocTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = openmls_pocTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* openmls_pocTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = openmls_pocTests.m; sourceTree = "<group>"; };
+		02516AC42C4699E7000E9270 /* openmls_poc-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "openmls_poc-Bridging-Header.h"; sourceTree = "<group>"; };
+		02516AC52C4699E7000E9270 /* OpenMLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenMLS.swift; path = openmls_poc/OpenMLS.swift; sourceTree = "<group>"; };
+		02516AC72C469A73000E9270 /* OpenMLS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OpenMLS.m; path = openmls_poc/OpenMLS.m; sourceTree = "<group>"; };
+		02516AD62C490D15000E9270 /* OpenMLSReactNativePOC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OpenMLSReactNativePOC.xcframework; sourceTree = "<group>"; };
+		02516AD72C490D15000E9270 /* OpenMLSReactNativePOC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenMLSReactNativePOC.swift; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* openmls_poc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openmls_poc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = openmls_poc/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = openmls_poc/AppDelegate.mm; sourceTree = "<group>"; };
@@ -45,7 +54,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-openmls_poc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-openmls_poc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = openmls_poc/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-openmls_poc-openmls_pocTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-openmls_poc-openmls_pocTests.release.xcconfig"; path = "Target Support Files/Pods-openmls_poc-openmls_pocTests/Pods-openmls_poc-openmls_pocTests.release.xcconfig"; sourceTree = "<group>"; };
-		E9ACEB368FAB1B965E7932A0 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = openmls_poc/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		E9ACEB368FAB1B965E7932A0 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = openmls_poc/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -62,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02516AD82C490D15000E9270 /* OpenMLSReactNativePOC.xcframework in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-openmls_poc.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				02516AD72C490D15000E9270 /* OpenMLSReactNativePOC.swift */,
+				02516AD62C490D15000E9270 /* OpenMLSReactNativePOC.xcframework */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -97,6 +109,9 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 				E9ACEB368FAB1B965E7932A0 /* PrivacyInfo.xcprivacy */,
+				02516AC52C4699E7000E9270 /* OpenMLS.swift */,
+				02516AC42C4699E7000E9270 /* openmls_poc-Bridging-Header.h */,
+				02516AC72C469A73000E9270 /* OpenMLS.m */,
 			);
 			name = openmls_poc;
 			sourceTree = "<group>";
@@ -211,7 +226,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1540;
 					};
 				};
 			};
@@ -399,7 +414,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				02516AC62C4699E7000E9270 /* OpenMLS.swift in Sources */,
+				02516AC82C469A73000E9270 /* OpenMLS.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				02516AD92C490D15000E9270 /* OpenMLSReactNativePOC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +436,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-openmls_poc-openmls_pocTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -445,6 +464,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-openmls_poc-openmls_pocTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = openmls_pocTests/Info.plist;
@@ -472,6 +492,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GX94K9S832;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = openmls_poc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -486,6 +507,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = openmls_poc;
+				SWIFT_OBJC_BRIDGING_HEADER = "openmls_poc-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -499,6 +521,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GX94K9S832;
 				INFOPLIST_FILE = openmls_poc/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -512,6 +535,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = openmls_poc;
+				SWIFT_OBJC_BRIDGING_HEADER = "openmls_poc-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -590,10 +614,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -665,10 +686,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
