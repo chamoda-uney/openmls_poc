@@ -19,14 +19,45 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const handleOnPress = () => {
-    const nativeF = NativeModules.OpenMLS.hello;
+  const [registeredUserData, setRegisteredUserData] = React.useState();
+
+  const handleRegisterUser = () => {
+    const nativeF = NativeModules.OpenMLS.registerUser;
+    nativeF(
+      {
+        user_id: 'chamoda_abc',
+      },
+      (res: any) => {
+        setRegisteredUserData(res);
+      },
+    );
+  };
+
+  const handleInitMls = () => {
+    const nativeF = NativeModules.OpenMLS.initMls;
     nativeF();
+  };
+
+  const handleCreateGroup = () => {
+    const nativeF = NativeModules.OpenMLS.createGroup;
+    nativeF(
+      {
+        group_id: 'group_abc',
+        registered_user_data: registeredUserData,
+      },
+      (res: any) => {
+        console.log(res);
+      },
+    );
   };
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <Button title="Run OpenMLS" onPress={handleOnPress} />
+      <Button title="0 - Init MLS" onPress={handleInitMls} />
+
+      <Button title="1 - Register User" onPress={handleRegisterUser} />
+
+      <Button title="2 - Create Group" onPress={handleCreateGroup} />
     </SafeAreaView>
   );
 }

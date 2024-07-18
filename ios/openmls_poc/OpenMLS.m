@@ -11,6 +11,13 @@
 
 @interface RCT_EXTERN_MODULE(OpenMLS, NSObject)
 
-RCT_EXTERN_METHOD(hello)
+RCT_EXTERN_METHOD(initMls)
+RCT_EXTERN_METHOD(registerUser: (NSDictionary *)params: (RCTResponseSenderBlock)result)
+RCT_EXTERN_METHOD(createGroup: (NSDictionary *)params: (RCTResponseSenderBlock)result)
+RCT_EXTERN_METHOD(inviteMember: (NSDictionary *)params: (RCTResponseSenderBlock)result)
+RCT_EXTERN_METHOD(createGroupFromWelcome: (NSDictionary *)params: (RCTResponseSenderBlock)result)
+RCT_EXTERN_METHOD(createApplicationMessage: (NSDictionary *)params: (RCTResponseSenderBlock)result)
+RCT_EXTERN_METHOD(processApplicationMessage: (NSDictionary *)params: (RCTResponseSenderBlock)result)
+
 
 @end

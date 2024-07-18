@@ -11,32 +11,57 @@ import Foundation
 class OpenMLS: NSObject{
   
   @objc
-  func registerUser(userId: String){
-    let result: String = mlsRegisterUser(userId: userId);
+  func initMls(){
+    let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+    let getFilePath = paths.strings(byAppendingPaths: ["mls_key_store.json"])[0];
+    mlsInit(keyStoreDirectory: getFilePath);
   }
   
   @objc
-  func createGroup(groupId: String, registeredUserDataJsonString: String){
-    let result: String = mlsCreateGroup(groupId: groupId, registeredUserDataJsonStr: registeredUserDataJsonString);
+  func registerUser(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+    let userId: String = params["user_id"] as! String
+    let res: String = mlsRegisterUser(userId: userId);
+    result([res]);
   }
   
   @objc
-  func inviteMember(registeredUserDataJsonString: String, memberKeyPackageJsonString: String, mlsGroupJsonString: String){
-    let result: String = mlsInviteMember(registeredUserDataJsonStr: registeredUserDataJsonString, memberKeyPackageJsonStr: memberKeyPackageJsonString, mlsGroupJsonStr: mlsGroupJsonString);
+  func createGroup(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+    let groupId: String = params["group_id"] as! String
+    let registeredUserDataJsonString: String = params["registered_user_data"] as! String
+    let res: String = mlsCreateGroup(groupId: groupId, registeredUserDataJsonStr: registeredUserDataJsonString);
+    result([res]);
   }
   
   @objc
-  func createGroupFromWelcome(serializedWelcomeMessageJsonString: String){
-    let result: String = mlsCreateGroupFromWelcome(serializedWelcomeMessageJsonStr: serializedWelcomeMessageJsonString);
+  func inviteMember(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+    let memberKeyPackageJsonString: String = params["member_key_package"] as! String
+    let registeredUserDataJsonString: String = params["registered_user_data"] as! String
+    let mlsGroupJsonString: String = params["mls_group"] as! String
+    let res: String = mlsInviteMember(registeredUserDataJsonStr: registeredUserDataJsonString, memberKeyPackageJsonStr: memberKeyPackageJsonString, mlsGroupJsonStr: mlsGroupJsonString);
+    result([res]);
   }
   
   @objc
-  func createApplicationMessage(registeredUserDataJsonString: String, mlsGroupJsonString: String, message: String){
-    let result: String = mlsCreateApplicationMessage(registeredUserDataJsonStr: registeredUserDataJsonString, mlsGroupJsonStr: mlsGroupJsonString, message: message);
+  func createGroupFromWelcome(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+    let serializedWelcomeMessageJsonString: String = params["serialized_welcome_message"] as! String
+    let res: String = mlsCreateGroupFromWelcome(serializedWelcomeMessageJsonStr: serializedWelcomeMessageJsonString);
+    result([res]);
   }
   
   @objc
-  func processApplicationMessage(mlsGroupJsonString: String, serializedApplicationMessageJsonString: String){
-    let result: String = mlsProcessApplicationMessage(mlsGroupJsonStr: mlsGroupJsonString, serializedApplicationMessageJsonStr: serializedApplicationMessageJsonString);
+  func createApplicationMessage(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+    let mlsGroupJsonString: String = params["mls_group"] as! String
+    let registeredUserDataJsonString: String = params["registered_user_data"] as! String
+    let message: String = params["message"] as! String
+    let res: String = mlsCreateApplicationMessage(registeredUserDataJsonStr: registeredUserDataJsonString, mlsGroupJsonStr: mlsGroupJsonString, message: message);
+    result([res]);
+  }
+  
+  @objc
+  func processApplicationMessage(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+    let mlsGroupJsonString: String = params["mls_group"] as! String
+    let serializedApplicationMessageJsonString: String = params["serialized_application_message"] as! String
+    let res: String = mlsProcessApplicationMessage(mlsGroupJsonStr: mlsGroupJsonString, serializedApplicationMessageJsonStr: serializedApplicationMessageJsonString);
+    result([res]);
   }
 }
