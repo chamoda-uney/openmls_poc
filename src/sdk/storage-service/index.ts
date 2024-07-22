@@ -34,11 +34,15 @@ export default class StorageService {
   static saveGroup(saveGroupInput: SaveGroupInput) {
     const realm = RealmHolder.get();
     return realm.write(() => {
-      return realm.create(Group, {
-        groupId: saveGroupInput.groupId,
-        name: saveGroupInput.name,
-        mlsGroup: JSON.stringify(saveGroupInput.mlsGroup),
-      });
+      return realm.create(
+        Group,
+        {
+          groupId: saveGroupInput.groupId,
+          name: saveGroupInput.name,
+          mlsGroup: JSON.stringify(saveGroupInput.mlsGroup),
+        },
+        UpdateMode.Modified,
+      );
     });
   }
 
@@ -77,10 +81,32 @@ export default class StorageService {
     });
   }
 
+  static upsertPublicUser(savePublicUserInput: SavePublicUserInput) {
+    const realm = RealmHolder.get();
+    return realm.write(() => {
+      return realm.create(
+        User,
+        {
+          username: savePublicUserInput.username,
+          name: savePublicUserInput.name,
+          keyPackage: JSON.stringify(savePublicUserInput.keyPackage),
+        },
+        UpdateMode.Modified,
+      );
+    });
+  }
+
   //reads
   static getPublicUserDirectory() {
     const realm = RealmHolder.get();
     return realm.objects(User);
+  }
+
+  static getPublicUser(username: string) {
+    const realm = RealmHolder.get();
+    return realm
+      .objects(User)
+      .filtered('username = $0', new Realm.BSON.ObjectID(username))[0];
   }
 
   static getRegisteredUserProfile() {
@@ -91,6 +117,11 @@ export default class StorageService {
   static getGroups() {
     const realm = RealmHolder.get();
     return realm.objects(Group);
+  }
+
+  static getGroup(groupId: Realm.BSON.ObjectId) {
+    const realm = RealmHolder.get();
+    return realm.objects(Group).filtered('groupId = $0', groupId)[0];
   }
 
   static getApplicationMessages(groupId: Realm.BSON.ObjectId) {

@@ -11,7 +11,7 @@ interface CreateMessageDTO {
   messageType: MessageType;
   groupId: string;
   payload: object;
-  destinationUsername: string;
+  destinationUsername?: string;
 }
 
 interface PatchUserDTO {
