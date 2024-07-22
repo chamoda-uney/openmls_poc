@@ -2,7 +2,6 @@ import React from 'react';
 import {FlatList, View} from 'react-native';
 import {Appbar, TextInput} from 'react-native-paper';
 import {User} from '../../sdk/storage-service/schema';
-import Realm from 'realm';
 import PublicUserListItem from '../../components/PublicUserListItem';
 import {useNavigation} from '@react-navigation/native';
 
@@ -11,12 +10,12 @@ const CreateGroupScreen = () => {
 
   const publicMembers: Partial<User>[] = [
     {
-      username: new Realm.BSON.ObjectID(1),
+      username: '1',
       name: 'Chamoda',
       keyPackage: 'test',
     },
     {
-      username: new Realm.BSON.ObjectID(2),
+      username: '2',
       name: 'Ranasinghe',
       keyPackage: 'test2',
     },

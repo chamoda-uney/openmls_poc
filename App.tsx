@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -15,12 +16,16 @@ import {
   PaperProvider,
 } from 'react-native-paper';
 import {NavigationTheme} from 'react-native-paper/lib/typescript/types';
-/* import CreateGroupScreen, {
+import CreateGroupScreen, {
   CreateGroupScreenAppBar,
-} from './src/screens/CreateGroupScreen'; */
+} from './src/screens/CreateGroupScreen';
 import ChatListScreen, {
   ChatListScreenAppBar,
 } from './src/screens/ChatListScreen';
+import ChatTimelineScreen, {
+  ChatTimelineScreenAppBar,
+} from './src/screens/ChatTimelineScreen';
+import screens from './src/screens/navigations';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,19 +39,26 @@ function App(): React.JSX.Element {
       <NavigationContainer theme={LightTheme}>
         <Stack.Navigator>
           <Stack.Screen
-            name="Chats"
+            name={screens.ChatListScreen}
             component={ChatListScreen}
             options={{
               header: () => <ChatListScreenAppBar />,
             }}
           />
-          {/*   <Stack.Screen
+          <Stack.Screen
             options={{
               header: () => <CreateGroupScreenAppBar />,
             }}
-            name="Create Group"
+            name={screens.CreateGroupScreen}
             component={CreateGroupScreen}
-          /> */}
+          />
+          <Stack.Screen
+            options={{
+              header: () => <ChatTimelineScreenAppBar />,
+            }}
+            name={screens.ChatTimelineScreen}
+            component={ChatTimelineScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
