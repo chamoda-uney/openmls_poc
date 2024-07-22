@@ -119,12 +119,12 @@ export default class StorageService {
     return realm.objects(Group);
   }
 
-  static getGroup(groupId: Realm.BSON.ObjectId) {
+  static getGroup(groupId: string) {
     const realm = RealmHolder.get();
     return realm.objects(Group).filtered('groupId = $0', groupId)[0];
   }
 
-  static getApplicationMessages(groupId: Realm.BSON.ObjectId) {
+  static getApplicationMessages(groupId: string) {
     const realm = RealmHolder.get();
     return realm.objects(Message).filtered('_groupId = $0', groupId);
   }

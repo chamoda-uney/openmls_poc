@@ -2,7 +2,7 @@ import Realm, {ObjectSchema} from 'realm';
 import {MessageType} from '../delivery-service/types';
 
 class User extends Realm.Object<User> {
-  username!: Realm.BSON.ObjectId;
+  username!: string;
   name!: string;
   keyPackage!: string;
 
@@ -11,14 +11,14 @@ class User extends Realm.Object<User> {
     name: 'User',
     properties: {
       name: 'string',
-      username: 'objectId',
+      username: 'string',
       keyPackage: 'string',
     },
   };
 }
 
 class Group extends Realm.Object<Group> {
-  groupId!: Realm.BSON.ObjectId;
+  groupId!: string;
   name!: string;
   mlsGroup!: string;
 
@@ -26,7 +26,7 @@ class Group extends Realm.Object<Group> {
     primaryKey: 'groupId',
     name: 'Group',
     properties: {
-      groupId: 'objectId',
+      groupId: 'string',
       name: 'string',
       mlsGroup: 'string',
     },
@@ -40,7 +40,7 @@ class Message extends Realm.Object<Message> {
   payload!: string;
 
   //relationships
-  _groupId!: Realm.BSON.ObjectId;
+  _groupId!: string;
   _createdUser?: User;
 
   static schema: ObjectSchema = {
@@ -51,14 +51,14 @@ class Message extends Realm.Object<Message> {
       createdUsername: 'string',
       messageType: 'string',
       payload: 'string',
-      _groupId: 'objectId',
+      _groupId: 'string',
       _createdUser: 'User?',
     },
   };
 }
 
 class RegisteredUserProfile extends Realm.Object<RegisteredUserProfile> {
-  username!: Realm.BSON.ObjectId;
+  username!: string;
   name!: string;
   registeredUserData!: string;
 
@@ -67,7 +67,7 @@ class RegisteredUserProfile extends Realm.Object<RegisteredUserProfile> {
     name: 'RegisteredUserProfile',
     properties: {
       name: 'string',
-      username: 'objectId',
+      username: 'string',
       registeredUserData: 'string',
     },
   };

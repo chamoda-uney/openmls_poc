@@ -1,5 +1,4 @@
 import {DeliveryService, OpenMLSInterface, StorageService} from '..';
-import Realm from 'realm';
 import {Group, Message, RegisteredUserProfile} from '../storage-service/schema';
 import {
   KeyPackage,
@@ -7,6 +6,7 @@ import {
   RegisteredUserData,
 } from '../openmls-interface/types';
 import {getRegisteredUser} from './helper';
+import uuid from 'react-native-uuid';
 
 export default class SdkService {
   /**
@@ -19,7 +19,7 @@ export default class SdkService {
     await StorageService.default.initStorageService();
   }
 
-  private static getSavedGroup(groupId: Realm.BSON.ObjectId) {
+  private static getSavedGroup(groupId: string) {
     const group = StorageService.default.getGroup(groupId);
     if (!group) {
       throw new Error('Group not found');
@@ -63,7 +63,7 @@ export default class SdkService {
     //save the user in storage
     return StorageService.default.saveRegisteredUser({
       name: name,
-      username: new Realm.BSON.ObjectId(username),
+      username: username,
       registeredUserData: openMLSResult,
     });
   }
@@ -90,7 +90,7 @@ export default class SdkService {
       throw new Error('Opponent is not found');
     }
 
-    const group_id = new Realm.BSON.ObjectId();
+    const group_id = uuid.v4().toString();
 
     const mlsGroup = await OpenMLSInterface.default.createGroup({
       group_id: group_id.toString(),
@@ -145,7 +145,7 @@ export default class SdkService {
    * @return {Promise<Message>} The application message that was sent.
    */
   static async sendApplicationMessage(
-    groupId: Realm.BSON.ObjectId,
+    groupId: string,
     message: string,
   ): Promise<Message> {
     //get the registered user
@@ -174,9 +174,9 @@ export default class SdkService {
 
     //send the encrypted message to delivery service
     await DeliveryService.default.createMessage({
-      username: registeredUser.username.toString(),
+      username: registeredUser.username,
       messageType: 'ApplicationMessage',
-      groupId: groupId.toString(),
+      groupId: groupId,
       payload: encryptedMessage,
     });
 

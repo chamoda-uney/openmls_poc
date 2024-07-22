@@ -5,23 +5,22 @@ import {
   MLSGroup,
 } from '../openmls-interface/types';
 import {User} from './schema';
-import Realm from 'realm';
 
 //input DTO types for swift NativeModule
 interface SaveRegisteredUserInput {
   name: string;
-  username: Realm.BSON.ObjectId;
+  username: string;
   registeredUserData: RegisteredUserData;
 }
 
 interface SavePublicUserInput {
   name: string;
-  username: Realm.BSON.ObjectId;
+  username: string;
   keyPackage: KeyPackage;
 }
 
 interface SaveGroupInput {
-  groupId: Realm.BSON.ObjectId;
+  groupId: string;
   name: string;
   mlsGroup: MLSGroup;
 }
@@ -30,7 +29,7 @@ interface SaveApplicationMessageInput {
   createdUsername: string;
   messageType: MessageType;
   payload: string;
-  groupId: Realm.BSON.ObjectId;
+  groupId: string;
   createdUser?: User;
 }
 

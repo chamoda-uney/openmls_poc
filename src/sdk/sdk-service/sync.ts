@@ -6,7 +6,6 @@ import {
   SerializedMessage,
 } from '../openmls-interface/types';
 import {getRegisteredUser} from './helper';
-import Realm from 'realm';
 
 export default class SyncService {
   static async sync() {
@@ -33,7 +32,7 @@ export default class SyncService {
   }
 
   private static async processApplicationMessage(message: MessageEntity) {
-    const groupId = new Realm.BSON.ObjectId(message.groupId);
+    const groupId = message.groupId;
 
     //get the group from realm
     const group = StorageService.default.getGroup(groupId);
@@ -47,7 +46,7 @@ export default class SyncService {
     //upsert the public user
     const createdUser = StorageService.default.upsertPublicUser({
       name: message.createdUser.name,
-      username: new Realm.BSON.ObjectID(message.createdUser.username),
+      username: message.createdUser.username,
       keyPackage: message.createdUser.keyPackage as KeyPackage,
     });
 
@@ -62,7 +61,7 @@ export default class SyncService {
   }
 
   private static async processWelcomeMessage(message: MessageEntity) {
-    const groupId = new Realm.BSON.ObjectId(message.groupId);
+    const groupId = message.groupId;
 
     //send welcome message contents to MLS interface
 
