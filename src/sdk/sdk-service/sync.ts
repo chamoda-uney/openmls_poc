@@ -11,7 +11,14 @@ import {DELIVERY_SERVICE_BASE_URL} from '../delivery-service';
 import {BroadCastedMessage} from './types';
 
 export default class SyncService {
+  static isSyncing = false;
+
   static async sync() {
+    if (SyncService.isSyncing) {
+      return;
+    }
+
+    this.isSyncing = true;
     const registeredUser = getRegisteredUser();
 
     const messages = await DeliveryService.default.getMessages(
@@ -32,6 +39,8 @@ export default class SyncService {
           break;
       }
     }
+
+    this.isSyncing = false;
   }
 
   static async connect() {

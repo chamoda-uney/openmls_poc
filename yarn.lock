@@ -1732,6 +1732,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookstate/core@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@hookstate/core@npm:4.0.1"
+  peerDependencies:
+    react: ^16.8.6 || ^17.0.0 || ^18.0.0
+  checksum: ad93e559e3ccfceff4783b1701cc9bed5fdded3592126639c1220074e6f2a847474e4c2a37b5a70ce3bfc799d7a1dfaa30b1095b507d9cf40de13d60fa388142
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -7810,6 +7819,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
+    "@hookstate/core": ^4.0.1
     "@react-native/babel-preset": 0.74.85
     "@react-native/eslint-config": 0.74.85
     "@react-native/metro-config": 0.74.85

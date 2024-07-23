@@ -75,6 +75,15 @@ export default class SdkService {
   }
 
   /**
+   * Checks if the user is registered by retrieving the registered user profile from storage.
+   *
+   * @return {boolean} Returns true if the user is registered, false otherwise.
+   */
+  static isUserRegistered(): boolean {
+    return !!StorageService.default.getRegisteredUserProfile();
+  }
+
+  /**
    * Creates a group with the specified name and invites an opponent user.
    *
    * @param {string} groupName - The name of the group to be created.

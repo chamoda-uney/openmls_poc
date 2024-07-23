@@ -3,6 +3,7 @@ import {FlatList, KeyboardAvoidingView, Platform, View} from 'react-native';
 import {Appbar, Button, TextInput} from 'react-native-paper';
 import {Group} from '../../sdk/storage-service/schema';
 import GroupListItem from '../../components/GroupListItem';
+import useRegistration from '../../hooks/useRegistration';
 
 const groups: Partial<Group>[] = [
   {
@@ -16,26 +17,41 @@ const groups: Partial<Group>[] = [
 ];
 
 const ChatListScreen = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-      }}>
-      <FlatList
+  const {isUserRegistered} = useRegistration();
+
+  if (isUserRegistered) {
+    return (
+      <View
         style={{
-          margin: 4,
-        }}
-        renderItem={({item}) => <GroupListItem group={item as Group} />}
-        keyExtractor={item => item.groupId!.toString()}
-        data={groups}
-      />
-    </View>
-  );
+          flex: 1,
+        }}>
+        <FlatList
+          style={{
+            margin: 4,
+          }}
+          renderItem={({item}) => <GroupListItem group={item as Group} />}
+          keyExtractor={item => item.groupId!.toString()}
+          data={groups}
+        />
+      </View>
+    );
+  }
+
+  return <RegisteredUserProfile />;
 };
 
 export default ChatListScreen;
 
 const RegisteredUserProfile = () => {
+  const {registerUser, isRegistering} = useRegistration();
+
+  const [username, setUsername] = React.useState('');
+  const [name, setName] = React.useState('');
+
+  const handleRegister = () => {
+    registerUser(username, name);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -48,6 +64,8 @@ const RegisteredUserProfile = () => {
         mode="outlined"
         label="Username"
         placeholder="Username"
+        value={username}
+        onChangeText={text => setUsername(text)}
         style={{
           margin: 8,
         }}
@@ -56,6 +74,8 @@ const RegisteredUserProfile = () => {
         mode="outlined"
         label="Display name"
         placeholder="Display name"
+        value={name}
+        onChangeText={text => setName(text)}
         style={{
           margin: 8,
         }}
@@ -64,6 +84,8 @@ const RegisteredUserProfile = () => {
         style={{
           margin: 8,
         }}
+        onPress={handleRegister}
+        loading={isRegistering}
         mode="contained">
         Register
       </Button>
