@@ -8,7 +8,7 @@
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   adaptNavigationTheme,
   DefaultTheme,
@@ -26,6 +26,7 @@ import ChatTimelineScreen, {
   ChatTimelineScreenAppBar,
 } from './src/screens/ChatTimelineScreen';
 import screens from './src/screens/navigations';
+import SdkService from './src/sdk';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,33 +35,47 @@ const {LightTheme} = adaptNavigationTheme({
 });
 
 function App(): React.JSX.Element {
+  const init = async () => {
+    await SdkService.default.init();
+    setInitializing(false);
+  };
+
+  const [initializing, setInitializing] = React.useState(true);
+
+  useEffect(() => {
+    init();
+  }, []);
   return (
     <PaperProvider theme={MD3LightTheme}>
-      <NavigationContainer theme={LightTheme}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name={screens.ChatListScreen}
-            component={ChatListScreen}
-            options={{
-              header: () => <ChatListScreenAppBar />,
-            }}
-          />
-          <Stack.Screen
-            options={{
-              header: () => <CreateGroupScreenAppBar />,
-            }}
-            name={screens.CreateGroupScreen}
-            component={CreateGroupScreen}
-          />
-          <Stack.Screen
-            options={{
-              header: () => <ChatTimelineScreenAppBar />,
-            }}
-            name={screens.ChatTimelineScreen}
-            component={ChatTimelineScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      {initializing ? (
+        <></>
+      ) : (
+        <NavigationContainer theme={LightTheme}>
+          <Stack.Navigator>
+            <Stack.Screen
+              name={screens.ChatListScreen}
+              component={ChatListScreen}
+              options={{
+                header: () => <ChatListScreenAppBar />,
+              }}
+            />
+            <Stack.Screen
+              options={{
+                header: () => <CreateGroupScreenAppBar />,
+              }}
+              name={screens.CreateGroupScreen}
+              component={CreateGroupScreen}
+            />
+            <Stack.Screen
+              options={{
+                header: () => <ChatTimelineScreenAppBar />,
+              }}
+              name={screens.ChatTimelineScreen}
+              component={ChatTimelineScreen}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )}
     </PaperProvider>
   );
 }

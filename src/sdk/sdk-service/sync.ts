@@ -1,3 +1,4 @@
+import {io} from 'socket.io-client';
 import {DeliveryService, OpenMLSInterface, StorageService} from '..';
 import {MessageEntity} from '../delivery-service/types';
 import {
@@ -6,6 +7,8 @@ import {
   SerializedMessage,
 } from '../openmls-interface/types';
 import {getRegisteredUser} from './helper';
+import {DELIVERY_SERVICE_BASE_URL} from '../delivery-service';
+import {BroadCastedMessage} from './types';
 
 export default class SyncService {
   static async sync() {
@@ -31,8 +34,34 @@ export default class SyncService {
     }
   }
 
+  static async connect() {
+    const socket = io(`${DELIVERY_SERVICE_BASE_URL}/socket`);
+
+    socket.connect();
+
+    socket.on('connect', () => {
+      this.sync();
+    });
+
+    socket.on('message', (message: BroadCastedMessage) => {
+      if (message.createdUsername !== getRegisteredUser().username) {
+        this.sync();
+      }
+    });
+
+    socket.on('disconnect', () => {
+      console.log('disconnected');
+    });
+  }
+
   private static async processApplicationMessage(message: MessageEntity) {
     const groupId = message.groupId;
+
+    //check if application message belongs to any of the joined groups
+    const joinedGroups = StorageService.default.getGroups();
+    if (!joinedGroups.find(group => group.groupId === groupId)) {
+      return;
+    }
 
     //get the group from realm
     const group = StorageService.default.getGroup(groupId);

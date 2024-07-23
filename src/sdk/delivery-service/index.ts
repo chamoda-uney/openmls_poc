@@ -6,7 +6,7 @@ import {
   UserEntity,
 } from './types';
 
-const DELIVERY_SERVICE_BASE_URL = 'http://localhost:3000';
+export const DELIVERY_SERVICE_BASE_URL = 'http://localhost:3000';
 
 export default class DeliveryService {
   static async createMessage(

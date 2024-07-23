@@ -1,4 +1,9 @@
-import {DeliveryService, OpenMLSInterface, StorageService} from '..';
+import {
+  DeliveryService,
+  OpenMLSInterface,
+  StorageService,
+  SyncService,
+} from '..';
 import {Group, Message, RegisteredUserProfile} from '../storage-service/schema';
 import {
   KeyPackage,
@@ -17,6 +22,7 @@ export default class SdkService {
   static async init(): Promise<void> {
     await OpenMLSInterface.default.initMls();
     await StorageService.default.initStorageService();
+    SyncService.default.connect();
   }
 
   private static getSavedGroup(groupId: string) {
