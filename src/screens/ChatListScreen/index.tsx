@@ -1,13 +1,11 @@
 import React, {useEffect} from 'react';
-import {FlatList, KeyboardAvoidingView, Platform, View} from 'react-native';
+import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {Appbar, Button, TextInput} from 'react-native-paper';
-import {Group} from '../../sdk/storage-service/schema';
-import GroupListItem from '../../components/GroupListItem';
 import useRegistration from '../../hooks/useRegistration';
 import {useNavigation} from '@react-navigation/native';
 import screens from '../navigations';
 import useCreateGroup from '../../hooks/useCreateGroup';
-import {StorageService} from '../../sdk';
+import ChatList from './ChatList';
 
 const ChatListScreen = () => {
   const {isUserRegistered} = useRegistration();
@@ -21,22 +19,13 @@ const ChatListScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUserRegistered]);
 
-  const groups = StorageService.default.getGroups();
-
   if (isUserRegistered) {
     return (
       <View
         style={{
           flex: 1,
         }}>
-        <FlatList
-          style={{
-            margin: 4,
-          }}
-          renderItem={({item}) => <GroupListItem group={item as Group} />}
-          keyExtractor={item => item.groupId!.toString()}
-          data={groups}
-        />
+        <ChatList />
       </View>
     );
   }
