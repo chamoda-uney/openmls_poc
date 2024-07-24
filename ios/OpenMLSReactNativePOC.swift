@@ -443,6 +443,13 @@ public func mlsCreateGroupFromWelcome(serializedWelcomeMessageJsonStr: String) -
     )
 })
 }
+public func mlsGetGroupMembers(mlsGroupJsonStr: String) -> String {
+    return try!  FfiConverterString.lift(try! rustCall() {
+    uniffi_openmls_react_native_poc_fn_func_mls_get_group_members(
+        FfiConverterString.lower(mlsGroupJsonStr),$0
+    )
+})
+}
 public func mlsInit(keyStoreDirectory: String) {try! rustCall() {
     uniffi_openmls_react_native_poc_fn_func_mls_init(
         FfiConverterString.lower(keyStoreDirectory),$0
@@ -463,6 +470,14 @@ public func mlsProcessApplicationMessage(mlsGroupJsonStr: String, serializedAppl
     uniffi_openmls_react_native_poc_fn_func_mls_process_application_message(
         FfiConverterString.lower(mlsGroupJsonStr),
         FfiConverterString.lower(serializedApplicationMessageJsonStr),$0
+    )
+})
+}
+public func mlsProcessCommitMessage(mlsGroupJsonStr: String, serializedCommitMessageJsonStr: String) -> String {
+    return try!  FfiConverterString.lift(try! rustCall() {
+    uniffi_openmls_react_native_poc_fn_func_mls_process_commit_message(
+        FfiConverterString.lower(mlsGroupJsonStr),
+        FfiConverterString.lower(serializedCommitMessageJsonStr),$0
     )
 })
 }
@@ -498,6 +513,9 @@ private var initializationResult: InitializationResult = {
     if (uniffi_openmls_react_native_poc_checksum_func_mls_create_group_from_welcome() != 11570) {
         return InitializationResult.apiChecksumMismatch
     }
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_get_group_members() != 25255) {
+        return InitializationResult.apiChecksumMismatch
+    }
     if (uniffi_openmls_react_native_poc_checksum_func_mls_init() != 27447) {
         return InitializationResult.apiChecksumMismatch
     }
@@ -505,6 +523,9 @@ private var initializationResult: InitializationResult = {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_openmls_react_native_poc_checksum_func_mls_process_application_message() != 65008) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_process_commit_message() != 27909) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_openmls_react_native_poc_checksum_func_mls_register_user() != 38171) {

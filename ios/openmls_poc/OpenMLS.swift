@@ -64,4 +64,19 @@ class OpenMLS: NSObject{
     let res: String = mlsProcessApplicationMessage(mlsGroupJsonStr: mlsGroupJsonString, serializedApplicationMessageJsonStr: serializedApplicationMessageJsonString);
     result([res]);
   }
+  
+  @objc
+  func processCommitMessage(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+    let mlsGroupJsonString: String = params["mls_group"] as! String
+    let serializedCommitMessageJsonString: String = params["serialized_commit_message"] as! String
+    let res: String = mlsProcessCommitMessage(mlsGroupJsonStr: mlsGroupJsonString, serializedCommitMessageJsonStr: serializedCommitMessageJsonString)
+    result([res]);
+  }
+  
+  @objc
+  func getGroupMembers(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+    let mlsGroupJsonString: String = params["mls_group"] as! String
+    let res: String = mlsGetGroupMembers(mlsGroupJsonStr: mlsGroupJsonString)
+    result([res]);
+  }
 }

@@ -33,6 +33,7 @@ const ChatTimelineScreenAppBar = () => {
     <Appbar.Header>
       <Appbar.BackAction onPress={() => navigation.goBack()} />
       <Appbar.Content title={group.name} />
+      <Appbar.Action onPress={() => {}} icon="plus" />
     </Appbar.Header>
   );
 };

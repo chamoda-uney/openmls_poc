@@ -10,8 +10,6 @@
 		00E356F31AD99517003FC87E /* openmls_pocTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* openmls_pocTests.m */; };
 		02516AC62C4699E7000E9270 /* OpenMLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02516AC52C4699E7000E9270 /* OpenMLS.swift */; };
 		02516AC82C469A73000E9270 /* OpenMLS.m in Sources */ = {isa = PBXBuildFile; fileRef = 02516AC72C469A73000E9270 /* OpenMLS.m */; };
-		02516AE82C4935C5000E9270 /* OpenMLSReactNativePOC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02516AE62C4935C4000E9270 /* OpenMLSReactNativePOC.xcframework */; };
-		02516AE92C4935C5000E9270 /* OpenMLSReactNativePOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02516AE72C4935C4000E9270 /* OpenMLSReactNativePOC.swift */; };
 		02516B002C4EDE02000E9270 /* FontAwesome6_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02516AED2C4EDE02000E9270 /* FontAwesome6_Regular.ttf */; };
 		02516B012C4EDE02000E9270 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02516AEE2C4EDE02000E9270 /* Fontisto.ttf */; };
 		02516B022C4EDE02000E9270 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02516AEF2C4EDE02000E9270 /* Octicons.ttf */; };
@@ -31,6 +29,8 @@
 		02516B102C4EDE02000E9270 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02516AFD2C4EDE02000E9270 /* Entypo.ttf */; };
 		02516B112C4EDE02000E9270 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02516AFE2C4EDE02000E9270 /* Foundation.ttf */; };
 		02516B122C4EDE02000E9270 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02516AFF2C4EDE02000E9270 /* Feather.ttf */; };
+		02516B152C5180CC000E9270 /* OpenMLSReactNativePOC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02516B132C5180CC000E9270 /* OpenMLSReactNativePOC.swift */; };
+		02516B162C5180CC000E9270 /* OpenMLSReactNativePOC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02516B142C5180CC000E9270 /* OpenMLSReactNativePOC.xcframework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -57,8 +57,6 @@
 		02516AC42C4699E7000E9270 /* openmls_poc-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "openmls_poc-Bridging-Header.h"; sourceTree = "<group>"; };
 		02516AC52C4699E7000E9270 /* OpenMLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OpenMLS.swift; path = openmls_poc/OpenMLS.swift; sourceTree = "<group>"; };
 		02516AC72C469A73000E9270 /* OpenMLS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OpenMLS.m; path = openmls_poc/OpenMLS.m; sourceTree = "<group>"; };
-		02516AE62C4935C4000E9270 /* OpenMLSReactNativePOC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OpenMLSReactNativePOC.xcframework; sourceTree = "<group>"; };
-		02516AE72C4935C4000E9270 /* OpenMLSReactNativePOC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenMLSReactNativePOC.swift; sourceTree = "<group>"; };
 		02516AED2C4EDE02000E9270 /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Regular.ttf"; sourceTree = "<group>"; };
 		02516AEE2C4EDE02000E9270 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		02516AEF2C4EDE02000E9270 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
@@ -78,6 +76,8 @@
 		02516AFD2C4EDE02000E9270 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		02516AFE2C4EDE02000E9270 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		02516AFF2C4EDE02000E9270 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		02516B132C5180CC000E9270 /* OpenMLSReactNativePOC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenMLSReactNativePOC.swift; sourceTree = "<group>"; };
+		02516B142C5180CC000E9270 /* OpenMLSReactNativePOC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OpenMLSReactNativePOC.xcframework; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* openmls_poc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openmls_poc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = openmls_poc/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = openmls_poc/AppDelegate.mm; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02516AE82C4935C5000E9270 /* OpenMLSReactNativePOC.xcframework in Frameworks */,
+				02516B162C5180CC000E9270 /* OpenMLSReactNativePOC.xcframework in Frameworks */,
 				9372F801D1DC9384130D99B6 /* libPods-openmls_poc.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,9 +163,9 @@
 		13B07FAE1A68108700A75B9A /* openmls_poc */ = {
 			isa = PBXGroup;
 			children = (
+				02516B132C5180CC000E9270 /* OpenMLSReactNativePOC.swift */,
+				02516B142C5180CC000E9270 /* OpenMLSReactNativePOC.xcframework */,
 				02516AEC2C4EDDB4000E9270 /* Fonts */,
-				02516AE72C4935C4000E9270 /* OpenMLSReactNativePOC.swift */,
-				02516AE62C4935C4000E9270 /* OpenMLSReactNativePOC.xcframework */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -501,7 +501,7 @@
 				02516AC62C4699E7000E9270 /* OpenMLS.swift in Sources */,
 				02516AC82C469A73000E9270 /* OpenMLS.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				02516AE92C4935C5000E9270 /* OpenMLSReactNativePOC.swift in Sources */,
+				02516B152C5180CC000E9270 /* OpenMLSReactNativePOC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,10 +709,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -795,10 +792,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
