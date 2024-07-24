@@ -4,6 +4,8 @@ import {Appbar, Button, TextInput} from 'react-native-paper';
 import {Group} from '../../sdk/storage-service/schema';
 import GroupListItem from '../../components/GroupListItem';
 import useRegistration from '../../hooks/useRegistration';
+import {useNavigation} from '@react-navigation/native';
+import screens from '../navigations';
 
 const groups: Partial<Group>[] = [
   {
@@ -93,9 +95,15 @@ const RegisteredUserProfile = () => {
   );
 };
 const ChatListScreenAppBar = () => {
+  const navigation = useNavigation();
+  const handleOnPress = () => {
+    navigation.navigate(screens.CreateGroupScreen as never);
+  };
+
   return (
     <Appbar.Header>
       <Appbar.Content title="MLS Chats" />
+      <Appbar.Action onPress={handleOnPress} icon="plus" />
     </Appbar.Header>
   );
 };

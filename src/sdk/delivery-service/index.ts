@@ -18,24 +18,15 @@ export default class DeliveryService {
     },
   });
 
-  static async createMessage(
-    createMessageDTO: CreateMessageDTO,
-  ): Promise<MessageEntity> {
-    const response = await fetch(`${DELIVERY_SERVICE_BASE_URL}/message`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(createMessageDTO),
-    });
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
+  static async createMessage(createMessageDTO: CreateMessageDTO) {
+    const response = await this.axiosInstance.post<MessageEntity>(
+      '/message',
+      createMessageDTO,
+    );
+    return response.data;
   }
 
-  static async createUser(createUserDTO: CreateUserDTO): Promise<UserEntity> {
-    console.log(createUserDTO);
+  static async createUser(createUserDTO: CreateUserDTO) {
     const response = await this.axiosInstance.post<UserEntity>(
       '/user',
       createUserDTO,
@@ -44,51 +35,30 @@ export default class DeliveryService {
     return response.data;
   }
 
-  static async patchUser(
-    username: string,
-    patchUserDTO: PatchUserDTO,
-  ): Promise<UserEntity> {
-    const response = await fetch(
-      `${DELIVERY_SERVICE_BASE_URL}/user/${username}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(patchUserDTO),
-      },
+  static async patchUser(username: string, patchUserDTO: PatchUserDTO) {
+    const response = await this.axiosInstance.patch<UserEntity>(
+      `/user/${username}`,
+      patchUserDTO,
     );
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
+    return response.data;
   }
 
-  static async getUser(username: string): Promise<UserEntity> {
-    const response = await fetch(
-      `${DELIVERY_SERVICE_BASE_URL}/user/${username}`,
+  static async getUser(username: string) {
+    const response = await this.axiosInstance.get<UserEntity>(
+      `/user/${username}`,
     );
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
+    return response.data;
   }
 
-  static async getUsers(): Promise<UserEntity[]> {
-    const response = await fetch(`${DELIVERY_SERVICE_BASE_URL}/user`);
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
+  static async getUsers() {
+    const response = await this.axiosInstance.get<UserEntity[]>('/user');
+    return response.data;
   }
 
-  static async getMessages(username: string): Promise<MessageEntity[]> {
-    const response = await fetch(
-      `${DELIVERY_SERVICE_BASE_URL}/message/${username}`,
+  static async getMessages(username: string) {
+    const response = await this.axiosInstance.get<MessageEntity[]>(
+      `/message/${username}`,
     );
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
+    return response.data;
   }
 }

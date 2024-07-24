@@ -51,7 +51,7 @@ const CreateGroupScreenAppBar = () => {
     <Appbar.Header>
       <Appbar.BackAction onPress={() => navigation.goBack()} />
       <Appbar.Content title="Create Group" />
-      <Appbar.Action icon="camera" />
+      <Appbar.Action icon="check" />
     </Appbar.Header>
   );
 };
