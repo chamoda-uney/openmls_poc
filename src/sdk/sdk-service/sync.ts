@@ -82,7 +82,7 @@ export default class SyncService {
     //send the serialized message to MLS interface and get decrypted message
     const decrypted = await OpenMLSInterface.default.processApplicationMessage({
       mls_group: JSON.parse(group.mlsGroup) as MLSGroup,
-      serialized_application_message: message.payload,
+      serialized_application_message: JSON.stringify(message.payload),
     });
 
     //upsert the public user
