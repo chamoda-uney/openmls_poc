@@ -10,6 +10,7 @@ import {
   MLSGroup,
   InvitedMemberData,
   SerializedMessage,
+  ProcessCommitMessageInput,
 } from './types';
 
 export default class OpenMLSInterface {
@@ -144,6 +145,50 @@ export default class OpenMLSInterface {
           );
         }
       });
+    });
+  }
+
+  static async processCommitMessage(
+    processCommitMessageInput: ProcessCommitMessageInput,
+  ) {
+    const nativeF = NativeModules.OpenMLS.processCommitMessage;
+
+    return new Promise<MLSGroup>((resolve, reject) => {
+      nativeF(
+        {
+          serialized_commit_message: JSON.stringify(
+            processCommitMessageInput.serialized_commit_message,
+          ),
+          mls_group: JSON.stringify(processCommitMessageInput.mls_group),
+        },
+        (res: string) => {
+          if (res) {
+            resolve(JSON.parse(res));
+          } else {
+            reject(
+              'processCommitMessage failed. check FFI logs for more details',
+            );
+          }
+        },
+      );
+    });
+  }
+
+  static async getGroupMembers(mlsGroup: MLSGroup) {
+    const nativeF = NativeModules.OpenMLS.getGroupMembers;
+    return new Promise<string[]>((resolve, reject) => {
+      nativeF(
+        {
+          mls_group: mlsGroup,
+        },
+        (res: string) => {
+          if (res) {
+            resolve(JSON.parse(res));
+          } else {
+            reject('getGroupMembers failed. check FFI logs for more details');
+          }
+        },
+      );
     });
   }
 }

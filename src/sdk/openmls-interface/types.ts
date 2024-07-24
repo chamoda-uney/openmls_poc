@@ -48,6 +48,11 @@ interface ProcessApplicationMessageInput {
   serialized_application_message: SerializedMessage;
 }
 
+interface ProcessCommitMessageInput {
+  mls_group: MLSGroup;
+  serialized_commit_message: SerializedMessage;
+}
+
 export type {
   KeyPackage,
   Signer,
@@ -62,4 +67,5 @@ export type {
   CreateGroupFromWelcomeInput,
   CreateApplicationMessageInput,
   ProcessApplicationMessageInput,
+  ProcessCommitMessageInput,
 };

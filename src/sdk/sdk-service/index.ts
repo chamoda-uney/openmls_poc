@@ -231,4 +231,19 @@ export default class SdkService {
 
     return StorageService.default.getPublicUserDirectory();
   }
+
+  /**
+   * Retrieves the usernames of all members in a group.
+   *
+   * @param {string} groupId - The ID of the group.
+   * @return {Promise<string[]>} A promise that resolves to an array of usernames.
+   */
+  static async getGroupMemberUsernames(groupId: string): Promise<string[]> {
+    const group = this.getSavedGroup(groupId);
+    const mlsGroup = JSON.parse(group.mlsGroup) as MLSGroup;
+    const memberUsernames = await OpenMLSInterface.default.getGroupMembers(
+      mlsGroup,
+    );
+    return memberUsernames;
+  }
 }
