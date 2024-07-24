@@ -70,6 +70,11 @@ export default class SyncService {
   private static async processApplicationMessage(message: MessageEntity) {
     const groupId = message.groupId;
 
+    const registeredUser = getRegisteredUser();
+    if (message.createdUser.username === registeredUser.username) {
+      return;
+    }
+
     //check if application message belongs to any of the joined groups
     const joinedGroups = StorageService.default.getGroups();
     if (!joinedGroups.find(group => group.groupId === groupId)) {
@@ -105,12 +110,12 @@ export default class SyncService {
   private static async processWelcomeMessage(message: MessageEntity) {
     const groupId = message.groupId;
 
-    //send welcome message contents to MLS interface
-
     const registeredUser = getRegisteredUser();
     if (message.createdUser.username === registeredUser.username) {
       return;
     }
+
+    //send welcome message contents to MLS interface
 
     const {serialized_welcome, group_name} = message.payload as unknown as {
       serialized_welcome: SerializedMessage;

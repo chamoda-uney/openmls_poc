@@ -4,27 +4,39 @@ import MessageListItem from '../../components/MessageListItem';
 import {getRegisteredUser} from '../../sdk/sdk-service/helper';
 import useChatList from '../../hooks/useChatList';
 import {StorageService} from '../../sdk';
+import {Message} from '../../sdk/storage-service/schema';
 
 const ChatTimelineList = () => {
   const registeredUser = getRegisteredUser();
 
   const {selectedGroupId} = useChatList();
 
+  const messagesRealm = StorageService.default.getApplicationMessages(
+    selectedGroupId!,
+  );
+
   const loadMessages = () => {
-    return StorageService.default.getApplicationMessages(selectedGroupId!);
+    const _messages: Message[] = [];
+    messagesRealm;
+    for (const msg of messagesRealm) {
+      _messages.push(msg);
+    }
+
+    return _messages.reverse();
   };
 
-  const [messages, setMessages] = React.useState(loadMessages());
+  const [messages, setMessages] = React.useState<Message[]>([]);
 
   useEffect(() => {
-    messages.addListener((_messages, changes) => {
+    setMessages(loadMessages());
+    messagesRealm.addListener((_messages, changes) => {
       changes.insertions.forEach(() => {
         setMessages(loadMessages());
       });
     });
 
     return () => {
-      messages.removeAllListeners();
+      messagesRealm.removeAllListeners();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

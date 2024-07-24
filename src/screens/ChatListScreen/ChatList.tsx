@@ -2,17 +2,26 @@ import React, {useEffect} from 'react';
 import {FlatList} from 'react-native';
 import GroupListItem from '../../components/GroupListItem';
 import {StorageService} from '../../sdk';
+import {Group} from '../../sdk/storage-service/schema';
 
 const ChatList = () => {
+  const groupsRealm = StorageService.default.getGroups();
+
   const loadGroups = () => {
-    const groups = StorageService.default.getGroups();
-    return groups;
+    const _groups: Group[] = [];
+
+    for (const group of groupsRealm) {
+      _groups.push(group);
+    }
+
+    return _groups.reverse();
   };
 
-  const [groups, setGroups] = React.useState(loadGroups());
+  const [groups, setGroups] = React.useState<Group[]>([]);
 
   useEffect(() => {
-    groups.addListener((_groups, changes) => {
+    setGroups(loadGroups());
+    groupsRealm.addListener((_groups, changes) => {
       changes.insertions.forEach(() => {
         setGroups(loadGroups());
       });

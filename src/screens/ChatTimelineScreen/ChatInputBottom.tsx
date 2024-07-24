@@ -16,6 +16,8 @@ const ChatInputBottom = () => {
       return;
     }
     SdkService.default.sendApplicationMessage(selectedGroupId, message);
+
+    setMessage('');
   };
 
   return (
