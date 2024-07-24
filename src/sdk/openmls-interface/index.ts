@@ -108,15 +108,24 @@ export default class OpenMLSInterface {
     const nativeF = NativeModules.OpenMLS.createApplicationMessage;
 
     return new Promise<SerializedMessage>((resolve, reject) => {
-      nativeF(createApplicationMessageInput, (res: string) => {
-        if (res) {
-          resolve(JSON.parse(res));
-        } else {
-          reject(
-            'createApplicationMessage failed. check FFI logs for more details',
-          );
-        }
-      });
+      nativeF(
+        {
+          mls_group: createApplicationMessageInput.mls_group,
+          registered_user_data: JSON.stringify(
+            createApplicationMessageInput.registered_user_data,
+          ),
+          message: createApplicationMessageInput.message,
+        },
+        (res: string) => {
+          if (res) {
+            resolve(JSON.parse(res));
+          } else {
+            reject(
+              'createApplicationMessage failed. check FFI logs for more details',
+            );
+          }
+        },
+      );
     });
   }
 

@@ -4,14 +4,18 @@ import {Group} from '../sdk/storage-service/schema';
 import {Avatar, Text} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import screens from '../screens/navigations';
+import useChatList from '../hooks/useChatList';
 
 export type GroupListItemProps = {group: Group};
 
 const GroupListItem: React.FC<GroupListItemProps> = ({group}) => {
   const navigation = useNavigation();
 
+  const {setSelectedGroupId} = useChatList();
+
   const handleTouch = () => {
     navigation.navigate(screens.ChatTimelineScreen as never);
+    setSelectedGroupId(group.groupId);
   };
 
   return (

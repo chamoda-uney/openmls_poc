@@ -13,8 +13,13 @@ const useChatList = () => {
 
   const {selectedGroupId} = chatListState.get();
 
+  const setSelectedGroupId = (value: string | undefined) => {
+    chatListState.merge({selectedGroupId: value});
+  };
+
   return {
     selectedGroupId,
+    setSelectedGroupId,
   };
 };
 

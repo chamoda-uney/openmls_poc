@@ -202,7 +202,9 @@ export default class SdkService {
       username: registeredUser.username,
       messageType: 'ApplicationMessage',
       groupId: groupId,
-      payload: encryptedMessage,
+      payload: {
+        encrypted_serialized_application_message: encryptedMessage,
+      },
     });
 
     return applicationMessage;

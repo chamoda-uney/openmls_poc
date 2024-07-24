@@ -19,6 +19,8 @@ export default class DeliveryService {
   });
 
   static async createMessage(createMessageDTO: CreateMessageDTO) {
+    console.log(createMessageDTO);
+
     const response = await this.axiosInstance.post<MessageEntity>(
       '/message',
       createMessageDTO,
