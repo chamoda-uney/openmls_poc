@@ -7,17 +7,7 @@ import useRegistration from '../../hooks/useRegistration';
 import {useNavigation} from '@react-navigation/native';
 import screens from '../navigations';
 import useCreateGroup from '../../hooks/useCreateGroup';
-
-const groups: Partial<Group>[] = [
-  {
-    groupId: 'g_0001',
-    name: 'Uney Chat',
-  },
-  {
-    groupId: 'g_0002',
-    name: 'HR Internal',
-  },
-];
+import {StorageService} from '../../sdk';
 
 const ChatListScreen = () => {
   const {isUserRegistered} = useRegistration();
@@ -30,6 +20,8 @@ const ChatListScreen = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUserRegistered]);
+
+  const groups = StorageService.default.getGroups();
 
   if (isUserRegistered) {
     return (

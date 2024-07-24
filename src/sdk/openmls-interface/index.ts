@@ -83,15 +83,22 @@ export default class OpenMLSInterface {
     const nativeF = NativeModules.OpenMLS.createGroupFromWelcome;
 
     return new Promise<MLSGroup>((resolve, reject) => {
-      nativeF(createGroupFromWelcomeInput, (res: string) => {
-        if (res) {
-          resolve(JSON.parse(res));
-        } else {
-          reject(
-            'createGroupFromWelcome failed. check FFI logs for more details',
-          );
-        }
-      });
+      nativeF(
+        {
+          serialized_welcome_message: JSON.stringify(
+            createGroupFromWelcomeInput.serialized_welcome_message,
+          ),
+        },
+        (res: string) => {
+          if (res) {
+            resolve(JSON.parse(res));
+          } else {
+            reject(
+              'createGroupFromWelcome failed. check FFI logs for more details',
+            );
+          }
+        },
+      );
     });
   }
 
