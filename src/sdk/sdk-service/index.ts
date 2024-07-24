@@ -4,7 +4,12 @@ import {
   StorageService,
   SyncService,
 } from '..';
-import {Group, Message, RegisteredUserProfile} from '../storage-service/schema';
+import {
+  Group,
+  Message,
+  RegisteredUserProfile,
+  User,
+} from '../storage-service/schema';
 import {
   KeyPackage,
   MLSGroup,
@@ -12,6 +17,7 @@ import {
 } from '../openmls-interface/types';
 import {getRegisteredUser} from './helper';
 import uuid from 'react-native-uuid';
+import {Results} from 'realm';
 
 export default class SdkService {
   /**
@@ -118,8 +124,6 @@ export default class SdkService {
       ) as RegisteredUserData,
     });
 
-    console.log(mlsGroup);
-
     //save the group in storage
     StorageService.default.saveGroup({
       groupId: group_id,
@@ -136,16 +140,12 @@ export default class SdkService {
       member_key_package: JSON.parse(opponent.keyPackage) as KeyPackage,
     });
 
-    console.log(invitedMemberData);
-
     //save the group in storage (after adding the member)
     const group = StorageService.default.saveGroup({
       groupId: group_id,
       name: groupName,
       mlsGroup: JSON.stringify(invitedMemberData.mls_group),
     });
-
-    console.log(group);
 
     // send the group invite message
     await DeliveryService.default.createMessage({
@@ -206,5 +206,29 @@ export default class SdkService {
     });
 
     return applicationMessage;
+  }
+
+  /**
+   * Asynchronously updates the public user directory by fetching the user directory from the delivery service
+   * and upserting each user into the storage service, except for the currently registered user.
+   *
+   * @return {Promise<Results<User>>} A promise that resolves when the public user directory has been updated.
+   */
+  static async updatePublicUserDirectory(): Promise<Results<User>> {
+    const registeredUser = getRegisteredUser();
+
+    const userDirectory = await DeliveryService.default.getUsers();
+
+    for (const user of userDirectory) {
+      if (user.username !== registeredUser.username) {
+        StorageService.default.upsertPublicUser({
+          name: user.name,
+          username: user.username,
+          keyPackage: JSON.stringify(user.keyPackage),
+        });
+      }
+    }
+
+    return StorageService.default.getPublicUserDirectory();
   }
 }

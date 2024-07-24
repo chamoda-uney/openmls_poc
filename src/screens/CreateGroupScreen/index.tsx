@@ -1,40 +1,53 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, View} from 'react-native';
-import {Appbar, TextInput} from 'react-native-paper';
+import {ActivityIndicator, Appbar, TextInput} from 'react-native-paper';
 import {User} from '../../sdk/storage-service/schema';
 import PublicUserListItem from '../../components/PublicUserListItem';
 import {useNavigation} from '@react-navigation/native';
+import useCreateGroup from '../../hooks/useCreateGroup';
 
 const CreateGroupScreen = () => {
-  const [groupNameText, setGroupNameText] = React.useState('');
+  const {
+    publicUserDirectory,
+    loadPublicGroups,
+    isLoadingPublicDirectory,
+    setNewGroupName,
+    newGroupName,
+    setNewGroupOpponentUsername,
+  } = useCreateGroup();
 
-  const publicMembers: Partial<User>[] = [
-    {
-      username: '1',
-      name: 'Chamoda',
-      keyPackage: 'test',
-    },
-    {
-      username: '2',
-      name: 'Ranasinghe',
-      keyPackage: 'test2',
-    },
-  ];
+  useEffect(() => {
+    loadPublicGroups();
+    return () => {
+      setNewGroupName('');
+      setNewGroupOpponentUsername(undefined);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (isLoadingPublicDirectory) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <View style={{flex: 1, gap: 16}}>
       <TextInput
-        onChange={e => setGroupNameText(e.nativeEvent.text)}
+        onChange={e => setNewGroupName(e.nativeEvent.text)}
         mode="flat"
         label="Group name"
         placeholder="Type group name"
+        value={newGroupName}
       />
 
       <FlatList
         style={{
           margin: 4,
         }}
-        data={publicMembers}
+        data={publicUserDirectory}
         keyExtractor={item => item.username!.toString()}
         renderItem={({item}) => <PublicUserListItem user={item as User} />}
       />
@@ -47,11 +60,24 @@ export default CreateGroupScreen;
 const CreateGroupScreenAppBar = () => {
   const navigation = useNavigation();
 
+  const {
+    isLoadingPublicDirectory,
+    newGroupName,
+    newGroupOpponentUsername,
+    createNewGroup,
+  } = useCreateGroup();
+
+  const handleOnPress = () => {
+    createNewGroup();
+  };
+
   return (
     <Appbar.Header>
       <Appbar.BackAction onPress={() => navigation.goBack()} />
       <Appbar.Content title="Create Group" />
-      <Appbar.Action icon="check" />
+      {isLoadingPublicDirectory === false &&
+        newGroupOpponentUsername &&
+        newGroupName && <Appbar.Action icon="check" onPress={handleOnPress} />}
     </Appbar.Header>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, KeyboardAvoidingView, Platform, View} from 'react-native';
 import {Appbar, Button, TextInput} from 'react-native-paper';
 import {Group} from '../../sdk/storage-service/schema';
@@ -6,6 +6,7 @@ import GroupListItem from '../../components/GroupListItem';
 import useRegistration from '../../hooks/useRegistration';
 import {useNavigation} from '@react-navigation/native';
 import screens from '../navigations';
+import useCreateGroup from '../../hooks/useCreateGroup';
 
 const groups: Partial<Group>[] = [
   {
@@ -20,6 +21,15 @@ const groups: Partial<Group>[] = [
 
 const ChatListScreen = () => {
   const {isUserRegistered} = useRegistration();
+
+  const {loadPublicGroups} = useCreateGroup();
+
+  useEffect(() => {
+    if (isUserRegistered) {
+      loadPublicGroups();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUserRegistered]);
 
   if (isUserRegistered) {
     return (

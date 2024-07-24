@@ -36,13 +36,21 @@ export default class OpenMLSInterface {
     const nativeF = NativeModules.OpenMLS.createGroup;
 
     return new Promise<MLSGroup>((resolve, reject) => {
-      nativeF(createGroupInput, (res: string) => {
-        if (res) {
-          resolve(JSON.parse(res));
-        } else {
-          reject('createGroup failed. check FFI logs for more details');
-        }
-      });
+      nativeF(
+        {
+          group_id: createGroupInput.group_id,
+          registered_user_data: JSON.stringify(
+            createGroupInput.registered_user_data,
+          ),
+        },
+        (res: string) => {
+          if (res) {
+            resolve(JSON.parse(res));
+          } else {
+            reject('createGroup failed. check FFI logs for more details');
+          }
+        },
+      );
     });
   }
 
@@ -50,13 +58,22 @@ export default class OpenMLSInterface {
     const nativeF = NativeModules.OpenMLS.inviteMember;
 
     return new Promise<InvitedMemberData>((resolve, reject) => {
-      nativeF(inviteMemberInput, (res: string) => {
-        if (res) {
-          resolve(JSON.parse(res));
-        } else {
-          reject('inviteMember failed. check FFI logs for more details');
-        }
-      });
+      nativeF(
+        {
+          member_key_package: inviteMemberInput.member_key_package,
+          registered_user_data: JSON.stringify(
+            inviteMemberInput.registered_user_data,
+          ),
+          mls_group: JSON.stringify(inviteMemberInput.mls_group),
+        },
+        (res: string) => {
+          if (res) {
+            resolve(JSON.parse(res));
+          } else {
+            reject('inviteMember failed. check FFI logs for more details');
+          }
+        },
+      );
     });
   }
 

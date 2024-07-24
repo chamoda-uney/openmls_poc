@@ -6,7 +6,7 @@ export interface RegistrationState {
   isRegistering: boolean;
 }
 
-export const defaultRegistrationState: RegistrationState = {
+const defaultRegistrationState: RegistrationState = {
   isUserRegistered: false,
   isRegistering: false,
 };

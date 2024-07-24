@@ -104,9 +104,7 @@ export default class StorageService {
 
   static getPublicUser(username: string) {
     const realm = RealmHolder.get();
-    return realm
-      .objects(User)
-      .filtered('username = $0', new Realm.BSON.ObjectID(username))[0];
+    return realm.objects(User).filtered('username = $0', username)[0];
   }
 
   static getRegisteredUserProfile() {
