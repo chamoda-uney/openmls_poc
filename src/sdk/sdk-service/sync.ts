@@ -107,6 +107,11 @@ export default class SyncService {
 
     //send welcome message contents to MLS interface
 
+    const registeredUser = getRegisteredUser();
+    if (message.createdUser.username === registeredUser.username) {
+      return;
+    }
+
     const {serialized_welcome, group_name} = message.payload as unknown as {
       serialized_welcome: SerializedMessage;
       group_name: string;
