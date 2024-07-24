@@ -22,9 +22,9 @@ export default class OpenMLSInterface {
     const nativeF = NativeModules.OpenMLS.registerUser;
 
     return new Promise<RegisteredUserData>((resolve, reject) => {
-      nativeF(registerUserInput, (res: RegisteredUserData) => {
+      nativeF(registerUserInput, (res: string) => {
         if (res) {
-          resolve(res);
+          resolve(JSON.parse(res));
         } else {
           reject('registerUser failed. check FFI logs for more details');
         }
@@ -36,9 +36,9 @@ export default class OpenMLSInterface {
     const nativeF = NativeModules.OpenMLS.createGroup;
 
     return new Promise<MLSGroup>((resolve, reject) => {
-      nativeF(createGroupInput, (res: MLSGroup) => {
+      nativeF(createGroupInput, (res: string) => {
         if (res) {
-          resolve(res);
+          resolve(JSON.parse(res));
         } else {
           reject('createGroup failed. check FFI logs for more details');
         }
@@ -50,9 +50,9 @@ export default class OpenMLSInterface {
     const nativeF = NativeModules.OpenMLS.inviteMember;
 
     return new Promise<InvitedMemberData>((resolve, reject) => {
-      nativeF(inviteMemberInput, (res: InvitedMemberData) => {
+      nativeF(inviteMemberInput, (res: string) => {
         if (res) {
-          resolve(res);
+          resolve(JSON.parse(res));
         } else {
           reject('inviteMember failed. check FFI logs for more details');
         }
@@ -66,9 +66,9 @@ export default class OpenMLSInterface {
     const nativeF = NativeModules.OpenMLS.createGroupFromWelcome;
 
     return new Promise<MLSGroup>((resolve, reject) => {
-      nativeF(createGroupFromWelcomeInput, (res: MLSGroup) => {
+      nativeF(createGroupFromWelcomeInput, (res: string) => {
         if (res) {
-          resolve(res);
+          resolve(JSON.parse(res));
         } else {
           reject(
             'createGroupFromWelcome failed. check FFI logs for more details',
@@ -84,9 +84,9 @@ export default class OpenMLSInterface {
     const nativeF = NativeModules.OpenMLS.createApplicationMessage;
 
     return new Promise<SerializedMessage>((resolve, reject) => {
-      nativeF(createApplicationMessageInput, (res: SerializedMessage) => {
+      nativeF(createApplicationMessageInput, (res: string) => {
         if (res) {
-          resolve(res);
+          resolve(JSON.parse(res));
         } else {
           reject(
             'createApplicationMessage failed. check FFI logs for more details',

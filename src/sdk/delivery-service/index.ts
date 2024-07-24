@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   CreateMessageDTO,
   CreateUserDTO,
@@ -9,6 +10,14 @@ import {
 export const DELIVERY_SERVICE_BASE_URL = 'http://localhost:3000';
 
 export default class DeliveryService {
+  static axiosInstance = axios.create({
+    baseURL: `${DELIVERY_SERVICE_BASE_URL}`,
+    headers: {
+      'Content-Type': 'application/json',
+      accept: '*/*',
+    },
+  });
+
   static async createMessage(
     createMessageDTO: CreateMessageDTO,
   ): Promise<MessageEntity> {
@@ -26,17 +35,13 @@ export default class DeliveryService {
   }
 
   static async createUser(createUserDTO: CreateUserDTO): Promise<UserEntity> {
-    const response = await fetch(`${DELIVERY_SERVICE_BASE_URL}/user`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(createUserDTO),
-    });
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json();
+    console.log(createUserDTO);
+    const response = await this.axiosInstance.post<UserEntity>(
+      '/user',
+      createUserDTO,
+    );
+
+    return response.data;
   }
 
   static async patchUser(

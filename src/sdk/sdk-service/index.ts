@@ -54,11 +54,15 @@ export default class SdkService {
       user_id: username,
     });
 
+    console.log(openMLSResult);
+
     const deliveryServiceResult = await DeliveryService.default.createUser({
       username: username,
       keyPackage: openMLSResult.key_package,
       name: name,
     });
+
+    console.log(deliveryServiceResult);
 
     if (!deliveryServiceResult.id) {
       throw new Error(
@@ -114,6 +118,8 @@ export default class SdkService {
       ) as RegisteredUserData,
     });
 
+    console.log(mlsGroup);
+
     //save the group in storage
     StorageService.default.saveGroup({
       groupId: group_id,
@@ -130,12 +136,16 @@ export default class SdkService {
       member_key_package: JSON.parse(opponent.keyPackage) as KeyPackage,
     });
 
+    console.log(invitedMemberData);
+
     //save the group in storage (after adding the member)
     const group = StorageService.default.saveGroup({
       groupId: group_id,
       name: groupName,
       mlsGroup: JSON.stringify(invitedMemberData.mls_group),
     });
+
+    console.log(group);
 
     // send the group invite message
     await DeliveryService.default.createMessage({

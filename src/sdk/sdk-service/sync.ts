@@ -14,6 +14,10 @@ export default class SyncService {
   static isSyncing = false;
 
   static async sync() {
+    if (StorageService.default.getRegisteredUserProfile() === undefined) {
+      return;
+    }
+
     if (SyncService.isSyncing) {
       return;
     }
