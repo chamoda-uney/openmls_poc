@@ -102,6 +102,11 @@ export default class StorageService {
     return realm.objects(User);
   }
 
+  static getPublicUserDirectoryExcept(usernames: string[]) {
+    const realm = RealmHolder.get();
+    return realm.objects(User).filtered('NOT username IN $0', usernames);
+  }
+
   static getPublicUser(username: string) {
     const realm = RealmHolder.get();
     return realm.objects(User).filtered('username = $0', username)[0];

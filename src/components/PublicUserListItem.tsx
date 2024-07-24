@@ -37,4 +37,28 @@ const PublicUserListItem: React.FC<PublicUserListItemProps> = ({user}) => {
   );
 };
 
+const PublicUserListItemForAddingToNewGroup: React.FC<
+  PublicUserListItemProps
+> = ({user}) => {
+  const handleOnPress = () => {};
+
+  return (
+    <TouchableOpacity
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+        marginTop: 4,
+        padding: 8,
+        borderRadius: 8,
+      }}
+      onPress={handleOnPress}>
+      <Avatar.Text size={48} label={`${user.name[0].toUpperCase()}`} />
+      <Text variant="bodyLarge">{user.name}</Text>
+    </TouchableOpacity>
+  );
+};
+
+export {PublicUserListItemForAddingToNewGroup};
+
 export default PublicUserListItem;

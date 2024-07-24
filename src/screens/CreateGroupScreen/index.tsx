@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {FlatList, View} from 'react-native';
 import {ActivityIndicator, Appbar, TextInput} from 'react-native-paper';
-import {User} from '../../sdk/storage-service/schema';
 import PublicUserListItem from '../../components/PublicUserListItem';
 import {useNavigation} from '@react-navigation/native';
 import useCreateGroup from '../../hooks/useCreateGroup';
@@ -49,7 +48,7 @@ const CreateGroupScreen = () => {
         }}
         data={publicUserDirectory}
         keyExtractor={item => item.username!.toString()}
-        renderItem={({item}) => <PublicUserListItem user={item as User} />}
+        renderItem={({item}) => <PublicUserListItem user={item} />}
       />
     </View>
   );

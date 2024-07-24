@@ -27,6 +27,9 @@ import ChatTimelineScreen, {
 } from './src/screens/ChatTimelineScreen';
 import screens from './src/screens/navigations';
 import SdkService from './src/sdk';
+import AddNewMemberScreen, {
+  AddNewMemberScreenAppBar,
+} from './src/screens/AddNewMemberScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +75,13 @@ function App(): React.JSX.Element {
               }}
               name={screens.ChatTimelineScreen}
               component={ChatTimelineScreen}
+            />
+            <Stack.Screen
+              name={screens.AddNewMemberScreen}
+              options={{
+                header: () => <AddNewMemberScreenAppBar />,
+              }}
+              component={AddNewMemberScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

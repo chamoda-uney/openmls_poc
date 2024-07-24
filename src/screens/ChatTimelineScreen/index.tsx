@@ -6,6 +6,7 @@ import useChatList from '../../hooks/useChatList';
 import {StorageService} from '../../sdk';
 import ChatInputBottom from './ChatInputBottom';
 import ChatTimelineList from './ChatTimelineList';
+import screens from '../navigations';
 
 const ChatTimelineScreen = () => {
   return (
@@ -33,7 +34,12 @@ const ChatTimelineScreenAppBar = () => {
     <Appbar.Header>
       <Appbar.BackAction onPress={() => navigation.goBack()} />
       <Appbar.Content title={group.name} />
-      <Appbar.Action onPress={() => {}} icon="plus" />
+      <Appbar.Action
+        onPress={() => {
+          navigation.navigate(screens.AddNewMemberScreen as never);
+        }}
+        icon="plus"
+      />
     </Appbar.Header>
   );
 };
