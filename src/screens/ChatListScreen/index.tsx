@@ -91,10 +91,14 @@ const ChatListScreenAppBar = () => {
     navigation.navigate(screens.CreateGroupScreen as never);
   };
 
+  const {isUserRegistered} = useRegistration();
+
   return (
     <Appbar.Header>
       <Appbar.Content title="MLS Chats" />
-      <Appbar.Action onPress={handleOnPress} icon="plus" />
+      {isUserRegistered && (
+        <Appbar.Action onPress={handleOnPress} icon="plus" />
+      )}
     </Appbar.Header>
   );
 };
