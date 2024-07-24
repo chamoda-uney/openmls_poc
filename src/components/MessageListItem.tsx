@@ -73,6 +73,7 @@ const ReceiveMessage: React.FC<Pick<MessageListItemProps, 'message'>> = ({
             backgroundColor: theme.colors.tertiary,
             maxWidth: '80%',
             paddingLeft: 4,
+            paddingRight: 6,
           }}>
           <View
             style={{

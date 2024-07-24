@@ -69,6 +69,7 @@ const CreateGroupScreenAppBar = () => {
 
   const handleOnPress = () => {
     createNewGroup();
+    navigation.goBack();
   };
 
   return (
