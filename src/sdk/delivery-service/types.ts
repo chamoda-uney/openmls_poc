@@ -4,7 +4,7 @@ interface CreateUserDTO {
   keyPackage: object;
 }
 
-type MessageType = 'ApplicationMessage' | 'WelcomeMessage';
+type MessageType = 'ApplicationMessage' | 'WelcomeMessage' | 'CommitMessage';
 
 interface CreateMessageDTO {
   username: string;

@@ -30,21 +30,34 @@ export default class SyncService {
     );
 
     for (const message of messages) {
-      switch (message.messageType) {
-        case 'WelcomeMessage':
-          await this.processWelcomeMessage(message);
-          break;
-
-        case 'ApplicationMessage':
-          await this.processApplicationMessage(message);
-          break;
-
-        default:
-          break;
-      }
+      this.processMessage(message);
     }
 
     this.isSyncing = false;
+  }
+
+  static async processMessage(message: MessageEntity) {
+    const registeredUser = getRegisteredUser();
+    if (message.createdUser.username === registeredUser.username) {
+      return;
+    }
+
+    switch (message.messageType) {
+      case 'WelcomeMessage':
+        await this.processWelcomeMessage(message);
+        break;
+
+      case 'ApplicationMessage':
+        await this.processApplicationMessage(message);
+        break;
+
+      case 'CommitMessage':
+        await this.processCommitMessage(message);
+        break;
+
+      default:
+        break;
+    }
   }
 
   static async connect() {
@@ -70,14 +83,8 @@ export default class SyncService {
   private static async processApplicationMessage(message: MessageEntity) {
     const groupId = message.groupId;
 
-    const registeredUser = getRegisteredUser();
-    if (message.createdUser.username === registeredUser.username) {
-      return;
-    }
-
     //check if application message belongs to any of the joined groups
-    const joinedGroups = StorageService.default.getGroups();
-    if (!joinedGroups.find(group => group.groupId === groupId)) {
+    if (!this.checkIfMessageBelongsToAnyOfJoinedGroups(message)) {
       return;
     }
 
@@ -110,11 +117,6 @@ export default class SyncService {
   private static async processWelcomeMessage(message: MessageEntity) {
     const groupId = message.groupId;
 
-    const registeredUser = getRegisteredUser();
-    if (message.createdUser.username === registeredUser.username) {
-      return;
-    }
-
     //send welcome message contents to MLS interface
 
     const {serialized_welcome, group_name} = message.payload as unknown as {
@@ -141,5 +143,43 @@ export default class SyncService {
     });
 
     return group;
+  }
+
+  private static async processCommitMessage(message: MessageEntity) {
+    const groupId = message.groupId;
+
+    //send welcome message contents to MLS interface
+
+    //check if commit message belongs to any of the joined groups
+    if (!this.checkIfMessageBelongsToAnyOfJoinedGroups(message)) {
+      return;
+    }
+
+    //get the group from realm
+    const group = StorageService.default.getGroup(groupId);
+
+    const mlsGroup = await OpenMLSInterface.default.processCommitMessage({
+      mls_group: JSON.parse(group.mlsGroup) as MLSGroup,
+      serialized_commit_message: JSON.stringify(message.payload),
+    });
+
+    //save the group in storage
+    const updatedGroup = StorageService.default.saveGroup({
+      groupId: groupId,
+      name: group.name,
+      mlsGroup: JSON.stringify(mlsGroup),
+    });
+
+    return updatedGroup;
+  }
+
+  private static checkIfMessageBelongsToAnyOfJoinedGroups(
+    message: MessageEntity,
+  ) {
+    const joinedGroups = StorageService.default.getGroups();
+    if (!joinedGroups.find(group => group.groupId === message.groupId)) {
+      return false;
+    }
+    return true;
   }
 }
