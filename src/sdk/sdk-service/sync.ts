@@ -148,7 +148,16 @@ export default class SyncService {
   private static async processCommitMessage(message: MessageEntity) {
     const groupId = message.groupId;
 
-    //send welcome message contents to MLS interface
+    const {serialized_commit, ignore_for_users} =
+      message.payload as unknown as {
+        serialized_commit: SerializedMessage;
+        ignore_for_users: string[];
+      };
+
+    //ignore if registered username is in ignore_for_users
+    if (ignore_for_users.includes(getRegisteredUser().username)) {
+      return;
+    }
 
     //check if commit message belongs to any of the joined groups
     if (!this.checkIfMessageBelongsToAnyOfJoinedGroups(message)) {
@@ -160,7 +169,7 @@ export default class SyncService {
 
     const mlsGroup = await OpenMLSInterface.default.processCommitMessage({
       mls_group: JSON.parse(group.mlsGroup) as MLSGroup,
-      serialized_commit_message: JSON.stringify(message.payload),
+      serialized_commit_message: JSON.stringify(serialized_commit),
     });
 
     //save the group in storage

@@ -246,4 +246,53 @@ export default class SdkService {
     );
     return memberUsernames;
   }
+
+  static async inviteMemberToGroup(groupId: string, opponentUsername: string) {
+    let group = this.getSavedGroup(groupId);
+    const mlsGroup = JSON.parse(group.mlsGroup) as MLSGroup;
+    const registeredUser = getRegisteredUser();
+    const opponent = StorageService.default.getPublicUser(opponentUsername);
+    const invitedMemberData = await OpenMLSInterface.default.inviteMember({
+      mls_group: mlsGroup,
+      registered_user_data: JSON.parse(
+        registeredUser.registeredUserData,
+      ) as RegisteredUserData,
+      member_key_package: JSON.parse(
+        JSON.parse(opponent.keyPackage),
+      ) as KeyPackage,
+    });
+
+    const {mls_group, serialized_mls_message_out, serialized_welcome_out} =
+      invitedMemberData;
+
+    //save the group in storage (after adding the member)
+    group = StorageService.default.saveGroup({
+      groupId: groupId,
+      name: group.name,
+      mlsGroup: JSON.stringify(mls_group),
+    });
+
+    // send the group invite message
+    await DeliveryService.default.createMessage({
+      username: registeredUser.username.toString(),
+      messageType: 'WelcomeMessage',
+      destinationUsername: opponentUsername,
+      groupId: group.groupId,
+      payload: {
+        serialized_welcome: serialized_welcome_out,
+        group_name: group.name,
+      },
+    });
+
+    // send the commit message
+    await DeliveryService.default.createMessage({
+      username: registeredUser.username.toString(),
+      messageType: 'CommitMessage',
+      groupId: group.groupId,
+      payload: {
+        serialized_commit: serialized_mls_message_out,
+        ignore_for_users: [opponentUsername],
+      },
+    });
+  }
 }
