@@ -40,6 +40,7 @@ export default class StorageService {
           groupId: saveGroupInput.groupId,
           name: saveGroupInput.name,
           mlsGroup: JSON.stringify(saveGroupInput.mlsGroup),
+          welcomeMessageId: saveGroupInput.welcomeMessageId,
         },
         UpdateMode.Modified,
       );

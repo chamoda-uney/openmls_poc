@@ -88,6 +88,11 @@ export default class SyncService {
       return;
     }
 
+    //check if application message is older than welcome message
+    if (this.checkIfMessageIsOlderThanWelcomeMessage(message, groupId)) {
+      return;
+    }
+
     //get the group from realm
     const group = StorageService.default.getGroup(groupId);
 
@@ -140,6 +145,7 @@ export default class SyncService {
       groupId: groupId,
       name: group_name,
       mlsGroup: JSON.stringify(mlsGroup),
+      welcomeMessageId: message.id,
     });
 
     return group;
@@ -161,6 +167,11 @@ export default class SyncService {
 
     //check if commit message belongs to any of the joined groups
     if (!this.checkIfMessageBelongsToAnyOfJoinedGroups(message)) {
+      return;
+    }
+
+    //check if commit message is older than welcome message
+    if (this.checkIfMessageIsOlderThanWelcomeMessage(message, groupId)) {
       return;
     }
 
@@ -190,5 +201,17 @@ export default class SyncService {
       return false;
     }
     return true;
+  }
+
+  private static checkIfMessageIsOlderThanWelcomeMessage(
+    message: MessageEntity,
+    groupId: string,
+  ) {
+    const group = StorageService.default.getGroup(groupId);
+    const welcomeMessageId = group.welcomeMessageId;
+    if (welcomeMessageId && message.id < welcomeMessageId) {
+      return true;
+    }
+    return false;
   }
 }

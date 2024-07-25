@@ -23,6 +23,7 @@ interface SaveGroupInput {
   groupId: string;
   name: string;
   mlsGroup: MLSGroup;
+  welcomeMessageId?: number;
 }
 
 interface SaveApplicationMessageInput {
