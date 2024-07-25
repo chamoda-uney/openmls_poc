@@ -247,7 +247,17 @@ export default class SdkService {
     return memberUsernames;
   }
 
-  static async inviteMemberToGroup(groupId: string, opponentUsername: string) {
+  /**
+   * Invites a member to a group.
+   *
+   * @param {string} groupId - The ID of the group.
+   * @param {string} opponentUsername - The username of the opponent.
+   * @return {Promise<Group>} A promise that resolves the group when the member is invited.
+   */
+  static async inviteMemberToGroup(
+    groupId: string,
+    opponentUsername: string,
+  ): Promise<Group> {
     let group = this.getSavedGroup(groupId);
     const mlsGroup = JSON.parse(group.mlsGroup) as MLSGroup;
     const registeredUser = getRegisteredUser();
@@ -294,5 +304,7 @@ export default class SdkService {
         ignore_for_users: [opponentUsername],
       },
     });
+
+    return group;
   }
 }
