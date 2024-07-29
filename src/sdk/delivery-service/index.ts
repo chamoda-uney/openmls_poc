@@ -7,7 +7,8 @@ import {
   UserEntity,
 } from './types';
 
-export const DELIVERY_SERVICE_BASE_URL = 'http://10.0.0.43:3000';
+export const DELIVERY_SERVICE_BASE_URL =
+  'https://openmls-poc-ds.chamodaranasinghe.com';
 
 export default class DeliveryService {
   static axiosInstance = axios.create({
