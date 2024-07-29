@@ -1,8 +1,11 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {User} from '../sdk/storage-service/schema';
-import {Avatar, Text, useTheme} from 'react-native-paper';
+import {ActivityIndicator, Avatar, Text, useTheme} from 'react-native-paper';
 import useCreateGroup from '../hooks/useCreateGroup';
+import SdkService from '../sdk';
+import useChatList from '../hooks/useChatList';
+import {useNavigation} from '@react-navigation/native';
 
 export type PublicUserListItemProps = {user: User};
 
@@ -40,7 +43,23 @@ const PublicUserListItem: React.FC<PublicUserListItemProps> = ({user}) => {
 const PublicUserListItemForAddingToNewGroup: React.FC<
   PublicUserListItemProps
 > = ({user}) => {
-  const handleOnPress = () => {};
+  const {selectedGroupId} = useChatList();
+
+  const [adding, setAdding] = React.useState(false);
+
+  const navigation = useNavigation();
+
+  const handleOnPress = async () => {
+    setAdding(true);
+    await SdkService.default.inviteMemberToGroup(
+      selectedGroupId!,
+      user.username,
+    );
+    setAdding(false);
+    setTimeout(() => {
+      navigation.goBack();
+    }, 200);
+  };
 
   return (
     <TouchableOpacity
@@ -53,7 +72,12 @@ const PublicUserListItemForAddingToNewGroup: React.FC<
         borderRadius: 8,
       }}
       onPress={handleOnPress}>
-      <Avatar.Text size={48} label={`${user.name[0].toUpperCase()}`} />
+      {adding ? (
+        <ActivityIndicator />
+      ) : (
+        <Avatar.Text size={48} label={`${user.name[0].toUpperCase()}`} />
+      )}
+
       <Text variant="bodyLarge">{user.name}</Text>
     </TouchableOpacity>
   );

@@ -159,7 +159,7 @@ export default class OpenMLSInterface {
           serialized_commit_message: JSON.stringify(
             processCommitMessageInput.serialized_commit_message,
           ),
-          mls_group: JSON.stringify(processCommitMessageInput.mls_group),
+          mls_group: processCommitMessageInput.mls_group,
         },
         (res: string) => {
           if (res) {

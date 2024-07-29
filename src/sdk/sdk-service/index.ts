@@ -259,17 +259,15 @@ export default class SdkService {
     opponentUsername: string,
   ): Promise<Group> {
     let group = this.getSavedGroup(groupId);
-    const mlsGroup = JSON.parse(group.mlsGroup) as MLSGroup;
     const registeredUser = getRegisteredUser();
     const opponent = StorageService.default.getPublicUser(opponentUsername);
+
     const invitedMemberData = await OpenMLSInterface.default.inviteMember({
-      mls_group: mlsGroup,
+      mls_group: JSON.parse(JSON.parse(group.mlsGroup)) as MLSGroup,
       registered_user_data: JSON.parse(
         registeredUser.registeredUserData,
       ) as RegisteredUserData,
-      member_key_package: JSON.parse(
-        JSON.parse(opponent.keyPackage),
-      ) as KeyPackage,
+      member_key_package: JSON.parse(opponent.keyPackage) as KeyPackage,
     });
 
     const {mls_group, serialized_mls_message_out, serialized_welcome_out} =

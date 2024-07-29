@@ -122,6 +122,11 @@ export default class SyncService {
   private static async processWelcomeMessage(message: MessageEntity) {
     const groupId = message.groupId;
 
+    //check if welcome message destination user is the same as registered user
+    if (message.destinationUser.username !== getRegisteredUser().username) {
+      return;
+    }
+
     //send welcome message contents to MLS interface
 
     const {serialized_welcome, group_name} = message.payload as unknown as {
@@ -180,7 +185,7 @@ export default class SyncService {
 
     const mlsGroup = await OpenMLSInterface.default.processCommitMessage({
       mls_group: JSON.parse(group.mlsGroup) as MLSGroup,
-      serialized_commit_message: JSON.stringify(serialized_commit),
+      serialized_commit_message: serialized_commit,
     });
 
     //save the group in storage
