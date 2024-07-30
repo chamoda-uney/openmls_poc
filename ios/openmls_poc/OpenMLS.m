@@ -13,6 +13,7 @@
 
 RCT_EXTERN_METHOD(initMls)
 RCT_EXTERN_METHOD(registerUser: (NSDictionary *)params: (RCTResponseSenderBlock)result)
+RCT_EXTERN_METHOD(createKeyPackage: (NSDictionary *)params: (RCTResponseSenderBlock)result)
 RCT_EXTERN_METHOD(createGroup: (NSDictionary *)params)
 RCT_EXTERN_METHOD(inviteMember: (NSDictionary *)params: (RCTResponseSenderBlock)result)
 RCT_EXTERN_METHOD(createGroupFromWelcome: (NSDictionary *)params)

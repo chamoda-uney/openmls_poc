@@ -10,6 +10,8 @@ import {
   InvitedMemberData,
   SerializedMessage,
   ProcessCommitMessageInput,
+  KeyPackage,
+  CreateKeyPackageInput,
 } from './types';
 
 export default class OpenMLSInterface {
@@ -23,6 +25,20 @@ export default class OpenMLSInterface {
 
     return new Promise<RegisteredUserData>((resolve, reject) => {
       nativeF(registerUserInput, (res: string) => {
+        if (res) {
+          resolve(JSON.parse(res));
+        } else {
+          reject('registerUser failed. check FFI logs for more details');
+        }
+      });
+    });
+  }
+
+  static async createKeyPackage(createKeyPackageInput: CreateKeyPackageInput) {
+    const nativeF = NativeModules.OpenMLS.createKeyPackage;
+
+    return new Promise<KeyPackage>((resolve, reject) => {
+      nativeF(createKeyPackageInput, (res: string) => {
         if (res) {
           resolve(JSON.parse(res));
         } else {

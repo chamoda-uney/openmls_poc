@@ -25,6 +25,13 @@ class OpenMLS: NSObject{
   }
   
   @objc
+  func createKeyPackage(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+    let registeredUserDataJsonString: String = params["registered_user_data"] as! String
+    let res: String = mlsCreateKeypackage(registeredUserDataJsonStr: registeredUserDataJsonString)
+    result([res]);
+  }
+  
+  @objc
   func createGroup(_ params: NSDictionary){
     let groupId: String = params["group_id"] as! String
     let registeredUserDataJsonString: String = params["registered_user_data"] as! String

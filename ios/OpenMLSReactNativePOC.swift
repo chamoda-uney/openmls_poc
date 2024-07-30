@@ -441,6 +441,13 @@ public func mlsCreateGroupFromWelcome(serializedWelcomeMessageJsonStr: String) {
     )
 }
 }
+public func mlsCreateKeypackage(registeredUserDataJsonStr: String) -> String {
+    return try!  FfiConverterString.lift(try! rustCall() {
+    uniffi_openmls_react_native_poc_fn_func_mls_create_keypackage(
+        FfiConverterString.lower(registeredUserDataJsonStr),$0
+    )
+})
+}
 public func mlsGetGroupMembers(groupId: String) -> String {
     return try!  FfiConverterString.lift(try! rustCall() {
     uniffi_openmls_react_native_poc_fn_func_mls_get_group_members(
@@ -508,6 +515,9 @@ private var initializationResult: InitializationResult = {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_openmls_react_native_poc_checksum_func_mls_create_group_from_welcome() != 42344) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_create_keypackage() != 16848) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_openmls_react_native_poc_checksum_func_mls_get_group_members() != 20298) {

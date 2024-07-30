@@ -90,6 +90,15 @@ export default class SdkService {
   }
 
   /**
+   * get the registered user profile
+   *
+   * @return {RegisteredUserProfile} Returns true if the user is registered, false otherwise.
+   */
+  static getRegisteredUser(): RegisteredUserProfile {
+    return StorageService.default.getRegisteredUserProfile();
+  }
+
+  /**
    * Creates a group with the specified name and invites an opponent user.
    *
    * @param {string} groupName - The name of the group to be created.
@@ -253,6 +262,10 @@ export default class SdkService {
   ): Promise<Group> {
     let group = this.getSavedGroup(groupId);
     const registeredUser = getRegisteredUser();
+
+    //update the opponent in local storage to get their latest key package
+    await this.getUpdatedOpponentKeyPackage(opponentUsername);
+
     const opponent = StorageService.default.getPublicUser(opponentUsername);
 
     const invitedMemberData = await OpenMLSInterface.default.inviteMember({
@@ -260,7 +273,7 @@ export default class SdkService {
       registered_user_data: JSON.parse(
         registeredUser.registeredUserData,
       ) as RegisteredUserData,
-      member_key_package: JSON.parse(opponent.keyPackage) as KeyPackage,
+      member_key_package: opponent.keyPackage as KeyPackage,
     });
 
     const {serialized_mls_message_out, serialized_welcome_out} =
@@ -296,5 +309,23 @@ export default class SdkService {
     });
 
     return group;
+  }
+
+  /**
+   * Retrieves the updated key package for the opponent with the specified username.
+   *
+   * @param {string} opponentUsername - The username of the opponent.
+   * @return {Promise<User>} A promise that resolves to the updated public user object.
+   */
+  static async getUpdatedOpponentKeyPackage(
+    opponentUsername: string,
+  ): Promise<User> {
+    const opponent = await DeliveryService.default.getUser(opponentUsername);
+    const publicUser = StorageService.default.upsertPublicUser({
+      name: opponent.name,
+      username: opponent.username,
+      keyPackage: opponent.keyPackage as KeyPackage,
+    });
+    return publicUser;
   }
 }

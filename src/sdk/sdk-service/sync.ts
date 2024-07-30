@@ -1,7 +1,11 @@
 import {io} from 'socket.io-client';
 import {DeliveryService, OpenMLSInterface, StorageService} from '..';
 import {MessageEntity} from '../delivery-service/types';
-import {KeyPackage, SerializedMessage} from '../openmls-interface/types';
+import {
+  KeyPackage,
+  RegisteredUserData,
+  SerializedMessage,
+} from '../openmls-interface/types';
 import {getRegisteredUser} from './helper';
 import {DELIVERY_SERVICE_BASE_URL} from '../delivery-service';
 import {BroadCastedMessage} from './types';
@@ -139,6 +143,18 @@ export default class SyncService {
 
     await OpenMLSInterface.default.createGroupFromWelcome({
       serialized_welcome_message: serialized_welcome,
+    });
+
+    //have to create a new KeyPackage after joining from a Welcome message and publish it to the DS
+    //get the registered user
+    const registeredUser = getRegisteredUser();
+    const keyPackage = await OpenMLSInterface.default.createKeyPackage({
+      registered_user_data:
+        registeredUser.registeredUserData as unknown as RegisteredUserData,
+    });
+    //upload the key package to the DS
+    await DeliveryService.default.patchUser(registeredUser.username, {
+      keyPackage: keyPackage,
     });
 
     //save the group in storage

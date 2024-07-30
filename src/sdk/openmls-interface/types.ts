@@ -25,6 +25,10 @@ interface CreateGroupInput {
   registered_user_data: RegisteredUserData;
 }
 
+interface CreateKeyPackageInput {
+  registered_user_data: RegisteredUserData;
+}
+
 interface InviteMemberInput {
   group_id: string;
   member_key_package: KeyPackage;
@@ -55,6 +59,7 @@ export type {
   KeyPackage,
   Signer,
   CredentialWithKey,
+  CreateKeyPackageInput,
   SerializedMessage,
   RegisterUserInput,
   CreateGroupInput,

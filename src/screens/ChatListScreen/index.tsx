@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import screens from '../navigations';
 import useCreateGroup from '../../hooks/useCreateGroup';
 import ChatList from './ChatList';
+import SdkService from '../../sdk';
 
 const ChatListScreen = () => {
   const {isUserRegistered} = useRegistration();
@@ -93,9 +94,11 @@ const ChatListScreenAppBar = () => {
 
   const {isUserRegistered} = useRegistration();
 
+  const registerdUser = SdkService.default.getRegisteredUser();
+
   return (
     <Appbar.Header>
-      <Appbar.Content title="MLS Chats" />
+      <Appbar.Content title={`${registerdUser.name}'s MLS Chats`} />
       {isUserRegistered && (
         <Appbar.Action onPress={handleOnPress} icon="plus" />
       )}
