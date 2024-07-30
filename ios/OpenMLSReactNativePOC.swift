@@ -419,34 +419,32 @@ fileprivate struct FfiConverterString: FfiConverter {
         writeBytes(&buf, value.utf8)
     }
 }
-public func mlsCreateApplicationMessage(registeredUserDataJsonStr: String, mlsGroupJsonStr: String, message: String) -> String {
+public func mlsCreateApplicationMessage(registeredUserDataJsonStr: String, message: String, groupId: String) -> String {
     return try!  FfiConverterString.lift(try! rustCall() {
     uniffi_openmls_react_native_poc_fn_func_mls_create_application_message(
         FfiConverterString.lower(registeredUserDataJsonStr),
-        FfiConverterString.lower(mlsGroupJsonStr),
-        FfiConverterString.lower(message),$0
+        FfiConverterString.lower(message),
+        FfiConverterString.lower(groupId),$0
     )
 })
 }
-public func mlsCreateGroup(groupId: String, registeredUserDataJsonStr: String) -> String {
-    return try!  FfiConverterString.lift(try! rustCall() {
+public func mlsCreateGroup(groupId: String, registeredUserDataJsonStr: String) {try! rustCall() {
     uniffi_openmls_react_native_poc_fn_func_mls_create_group(
         FfiConverterString.lower(groupId),
         FfiConverterString.lower(registeredUserDataJsonStr),$0
     )
-})
 }
-public func mlsCreateGroupFromWelcome(serializedWelcomeMessageJsonStr: String) -> String {
-    return try!  FfiConverterString.lift(try! rustCall() {
+}
+public func mlsCreateGroupFromWelcome(serializedWelcomeMessageJsonStr: String) {try! rustCall() {
     uniffi_openmls_react_native_poc_fn_func_mls_create_group_from_welcome(
         FfiConverterString.lower(serializedWelcomeMessageJsonStr),$0
     )
-})
 }
-public func mlsGetGroupMembers(mlsGroupJsonStr: String) -> String {
+}
+public func mlsGetGroupMembers(groupId: String) -> String {
     return try!  FfiConverterString.lift(try! rustCall() {
     uniffi_openmls_react_native_poc_fn_func_mls_get_group_members(
-        FfiConverterString.lower(mlsGroupJsonStr),$0
+        FfiConverterString.lower(groupId),$0
     )
 })
 }
@@ -456,30 +454,29 @@ public func mlsInit(keyStoreDirectory: String) {try! rustCall() {
     )
 }
 }
-public func mlsInviteMember(registeredUserDataJsonStr: String, memberKeyPackageJsonStr: String, mlsGroupJsonStr: String) -> String {
+public func mlsInviteMember(registeredUserDataJsonStr: String, memberKeyPackageJsonStr: String, groupId: String) -> String {
     return try!  FfiConverterString.lift(try! rustCall() {
     uniffi_openmls_react_native_poc_fn_func_mls_invite_member(
         FfiConverterString.lower(registeredUserDataJsonStr),
         FfiConverterString.lower(memberKeyPackageJsonStr),
-        FfiConverterString.lower(mlsGroupJsonStr),$0
+        FfiConverterString.lower(groupId),$0
     )
 })
 }
-public func mlsProcessApplicationMessage(mlsGroupJsonStr: String, serializedApplicationMessageJsonStr: String) -> String {
+public func mlsProcessApplicationMessage(groupId: String, serializedApplicationMessageJsonStr: String) -> String {
     return try!  FfiConverterString.lift(try! rustCall() {
     uniffi_openmls_react_native_poc_fn_func_mls_process_application_message(
-        FfiConverterString.lower(mlsGroupJsonStr),
+        FfiConverterString.lower(groupId),
         FfiConverterString.lower(serializedApplicationMessageJsonStr),$0
     )
 })
 }
-public func mlsProcessCommitMessage(mlsGroupJsonStr: String, serializedCommitMessageJsonStr: String) -> String {
-    return try!  FfiConverterString.lift(try! rustCall() {
+public func mlsProcessCommitMessage(groupId: String, serializedCommitMessageJsonStr: String) {try! rustCall() {
     uniffi_openmls_react_native_poc_fn_func_mls_process_commit_message(
-        FfiConverterString.lower(mlsGroupJsonStr),
+        FfiConverterString.lower(groupId),
         FfiConverterString.lower(serializedCommitMessageJsonStr),$0
     )
-})
+}
 }
 public func mlsRegisterUser(userId: String) -> String {
     return try!  FfiConverterString.lift(try! rustCall() {
@@ -504,28 +501,28 @@ private var initializationResult: InitializationResult = {
     if bindings_contract_version != scaffolding_contract_version {
         return InitializationResult.contractVersionMismatch
     }
-    if (uniffi_openmls_react_native_poc_checksum_func_mls_create_application_message() != 37841) {
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_create_application_message() != 37561) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_openmls_react_native_poc_checksum_func_mls_create_group() != 40370) {
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_create_group() != 27619) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_openmls_react_native_poc_checksum_func_mls_create_group_from_welcome() != 11570) {
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_create_group_from_welcome() != 42344) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_openmls_react_native_poc_checksum_func_mls_get_group_members() != 25255) {
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_get_group_members() != 20298) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_openmls_react_native_poc_checksum_func_mls_init() != 27447) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_openmls_react_native_poc_checksum_func_mls_invite_member() != 31975) {
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_invite_member() != 24648) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_openmls_react_native_poc_checksum_func_mls_process_application_message() != 65008) {
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_process_application_message() != 41943) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_openmls_react_native_poc_checksum_func_mls_process_commit_message() != 27909) {
+    if (uniffi_openmls_react_native_poc_checksum_func_mls_process_commit_message() != 16421) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_openmls_react_native_poc_checksum_func_mls_register_user() != 38171) {

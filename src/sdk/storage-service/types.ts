@@ -1,9 +1,5 @@
 import {MessageType} from '../delivery-service/types';
-import {
-  RegisteredUserData,
-  KeyPackage,
-  MLSGroup,
-} from '../openmls-interface/types';
+import {RegisteredUserData, KeyPackage} from '../openmls-interface/types';
 import {User} from './schema';
 
 //input DTO types for swift NativeModule
@@ -22,7 +18,6 @@ interface SavePublicUserInput {
 interface SaveGroupInput {
   groupId: string;
   name: string;
-  mlsGroup: MLSGroup;
   welcomeMessageId?: number;
 }
 

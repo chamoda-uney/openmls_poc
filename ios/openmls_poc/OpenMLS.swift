@@ -13,7 +13,7 @@ class OpenMLS: NSObject{
   @objc
   func initMls(){
     let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
-    let getFilePath = paths.strings(byAppendingPaths: ["mls_key_store.json"])[0];
+    let getFilePath = paths.strings(byAppendingPaths: ["mls_store.json"])[0];
     mlsInit(keyStoreDirectory: getFilePath);
   }
   
@@ -25,58 +25,55 @@ class OpenMLS: NSObject{
   }
   
   @objc
-  func createGroup(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+  func createGroup(_ params: NSDictionary){
     let groupId: String = params["group_id"] as! String
     let registeredUserDataJsonString: String = params["registered_user_data"] as! String
-    let res: String = mlsCreateGroup(groupId: groupId, registeredUserDataJsonStr: registeredUserDataJsonString);
-    result([res]);
+    mlsCreateGroup(groupId: groupId, registeredUserDataJsonStr: registeredUserDataJsonString);
   }
   
   @objc
   func inviteMember(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
     let memberKeyPackageJsonString: String = params["member_key_package"] as! String
     let registeredUserDataJsonString: String = params["registered_user_data"] as! String
-    let mlsGroupJsonString: String = params["mls_group"] as! String
-    let res: String = mlsInviteMember(registeredUserDataJsonStr: registeredUserDataJsonString, memberKeyPackageJsonStr: memberKeyPackageJsonString, mlsGroupJsonStr: mlsGroupJsonString);
+    let groupId: String = params["group_id"] as! String
+    let res: String = mlsInviteMember(registeredUserDataJsonStr: registeredUserDataJsonString, memberKeyPackageJsonStr: memberKeyPackageJsonString, groupId: groupId);
     result([res]);
   }
   
   @objc
-  func createGroupFromWelcome(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
+  func createGroupFromWelcome(_ params: NSDictionary){
     let serializedWelcomeMessageJsonString: String = params["serialized_welcome_message"] as! String
-    let res: String = mlsCreateGroupFromWelcome(serializedWelcomeMessageJsonStr: serializedWelcomeMessageJsonString);
-    result([res]);
+    mlsCreateGroupFromWelcome(serializedWelcomeMessageJsonStr: serializedWelcomeMessageJsonString);
   }
   
   @objc
   func createApplicationMessage(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
-    let mlsGroupJsonString: String = params["mls_group"] as! String
+    let groupId: String = params["group_id"] as! String
     let registeredUserDataJsonString: String = params["registered_user_data"] as! String
     let message: String = params["message"] as! String
-    let res: String = mlsCreateApplicationMessage(registeredUserDataJsonStr: registeredUserDataJsonString, mlsGroupJsonStr: mlsGroupJsonString, message: message);
+    let res: String = mlsCreateApplicationMessage(registeredUserDataJsonStr: registeredUserDataJsonString, message: message,groupId: groupId);
     result([res]);
   }
   
   @objc
   func processApplicationMessage(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
-    let mlsGroupJsonString: String = params["mls_group"] as! String
+    let groupId: String = params["group_id"] as! String
     let serializedApplicationMessageJsonString: String = params["serialized_application_message"] as! String
-    let res: String = mlsProcessApplicationMessage(mlsGroupJsonStr: mlsGroupJsonString, serializedApplicationMessageJsonStr: serializedApplicationMessageJsonString);
+    let res: String = mlsProcessApplicationMessage(groupId: groupId, serializedApplicationMessageJsonStr: serializedApplicationMessageJsonString);
     result([res]);
   }
   
   @objc
-  func processCommitMessage(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
-    let mlsGroupJsonString: String = params["mls_group"] as! String
+  func processCommitMessage(_ params: NSDictionary){
+    let groupId: String = params["group_id"] as! String
     let serializedCommitMessageJsonString: String = params["serialized_commit_message"] as! String
-    let res: String = mlsProcessCommitMessage(mlsGroupJsonStr: mlsGroupJsonString, serializedCommitMessageJsonStr: serializedCommitMessageJsonString)
-    result([res]);
+    mlsProcessCommitMessage(groupId: groupId, serializedCommitMessageJsonStr: serializedCommitMessageJsonString)
   }
   
   @objc
   func getGroupMembers(_ params: NSDictionary, _ result: RCTResponseSenderBlock){
-    let mlsGroupJsonString: String = params["mls_group"] as! String
-    let res: String = mlsGetGroupMembers(mlsGroupJsonStr: mlsGroupJsonString)
+    let groupId: String = params["group_id"] as! String
+    let res: String = mlsGetGroupMembers(groupId: groupId)
     result([res]);
   }
 }

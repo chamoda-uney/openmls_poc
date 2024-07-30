@@ -1,11 +1,7 @@
 import {io} from 'socket.io-client';
 import {DeliveryService, OpenMLSInterface, StorageService} from '..';
 import {MessageEntity} from '../delivery-service/types';
-import {
-  KeyPackage,
-  MLSGroup,
-  SerializedMessage,
-} from '../openmls-interface/types';
+import {KeyPackage, SerializedMessage} from '../openmls-interface/types';
 import {getRegisteredUser} from './helper';
 import {DELIVERY_SERVICE_BASE_URL} from '../delivery-service';
 import {BroadCastedMessage} from './types';
@@ -98,7 +94,7 @@ export default class SyncService {
 
     //send the serialized message to MLS interface and get decrypted message
     const decrypted = await OpenMLSInterface.default.processApplicationMessage({
-      mls_group: JSON.parse(group.mlsGroup) as MLSGroup,
+      group_id: group.groupId,
       serialized_application_message: JSON.stringify(message.payload),
     });
 
@@ -141,7 +137,7 @@ export default class SyncService {
       throw new Error('group_name is required');
     }
 
-    const mlsGroup = await OpenMLSInterface.default.createGroupFromWelcome({
+    await OpenMLSInterface.default.createGroupFromWelcome({
       serialized_welcome_message: serialized_welcome,
     });
 
@@ -149,7 +145,6 @@ export default class SyncService {
     const group = StorageService.default.saveGroup({
       groupId: groupId,
       name: group_name,
-      mlsGroup: JSON.stringify(mlsGroup),
       welcomeMessageId: message.id,
     });
 
@@ -183,8 +178,8 @@ export default class SyncService {
     //get the group from realm
     const group = StorageService.default.getGroup(groupId);
 
-    const mlsGroup = await OpenMLSInterface.default.processCommitMessage({
-      mls_group: JSON.parse(group.mlsGroup) as MLSGroup,
+    await OpenMLSInterface.default.processCommitMessage({
+      group_id: group.groupId,
       serialized_commit_message: serialized_commit,
     });
 
@@ -192,7 +187,6 @@ export default class SyncService {
     const updatedGroup = StorageService.default.saveGroup({
       groupId: groupId,
       name: group.name,
-      mlsGroup: JSON.stringify(mlsGroup),
     });
 
     return updatedGroup;

@@ -7,7 +7,6 @@ import {
   CreateApplicationMessageInput,
   ProcessApplicationMessageInput,
   RegisteredUserData,
-  MLSGroup,
   InvitedMemberData,
   SerializedMessage,
   ProcessCommitMessageInput,
@@ -36,22 +35,14 @@ export default class OpenMLSInterface {
   static async createGroup(createGroupInput: CreateGroupInput) {
     const nativeF = NativeModules.OpenMLS.createGroup;
 
-    return new Promise<MLSGroup>((resolve, reject) => {
-      nativeF(
-        {
-          group_id: createGroupInput.group_id,
-          registered_user_data: JSON.stringify(
-            createGroupInput.registered_user_data,
-          ),
-        },
-        (res: string) => {
-          if (res) {
-            resolve(JSON.parse(res));
-          } else {
-            reject('createGroup failed. check FFI logs for more details');
-          }
-        },
-      );
+    return new Promise<void>((resolve, _) => {
+      nativeF({
+        group_id: createGroupInput.group_id,
+        registered_user_data: JSON.stringify(
+          createGroupInput.registered_user_data,
+        ),
+      });
+      resolve();
     });
   }
 
@@ -65,7 +56,7 @@ export default class OpenMLSInterface {
           registered_user_data: JSON.stringify(
             inviteMemberInput.registered_user_data,
           ),
-          mls_group: JSON.stringify(inviteMemberInput.mls_group),
+          group_id: inviteMemberInput.group_id,
         },
         (res: string) => {
           if (res) {
@@ -83,23 +74,13 @@ export default class OpenMLSInterface {
   ) {
     const nativeF = NativeModules.OpenMLS.createGroupFromWelcome;
 
-    return new Promise<MLSGroup>((resolve, reject) => {
-      nativeF(
-        {
-          serialized_welcome_message: JSON.stringify(
-            createGroupFromWelcomeInput.serialized_welcome_message,
-          ),
-        },
-        (res: string) => {
-          if (res) {
-            resolve(JSON.parse(res));
-          } else {
-            reject(
-              'createGroupFromWelcome failed. check FFI logs for more details',
-            );
-          }
-        },
-      );
+    return new Promise<void>((resolve, _) => {
+      nativeF({
+        serialized_welcome_message: JSON.stringify(
+          createGroupFromWelcomeInput.serialized_welcome_message,
+        ),
+      });
+      resolve();
     });
   }
 
@@ -111,7 +92,7 @@ export default class OpenMLSInterface {
     return new Promise<SerializedMessage>((resolve, reject) => {
       nativeF(
         {
-          mls_group: createApplicationMessageInput.mls_group,
+          group_id: createApplicationMessageInput.group_id,
           registered_user_data: JSON.stringify(
             createApplicationMessageInput.registered_user_data,
           ),
@@ -153,33 +134,23 @@ export default class OpenMLSInterface {
   ) {
     const nativeF = NativeModules.OpenMLS.processCommitMessage;
 
-    return new Promise<MLSGroup>((resolve, reject) => {
-      nativeF(
-        {
-          serialized_commit_message: JSON.stringify(
-            processCommitMessageInput.serialized_commit_message,
-          ),
-          mls_group: processCommitMessageInput.mls_group,
-        },
-        (res: string) => {
-          if (res) {
-            resolve(JSON.parse(res));
-          } else {
-            reject(
-              'processCommitMessage failed. check FFI logs for more details',
-            );
-          }
-        },
-      );
+    return new Promise<void>((resolve, _) => {
+      nativeF({
+        serialized_commit_message: JSON.stringify(
+          processCommitMessageInput.serialized_commit_message,
+        ),
+        group_id: processCommitMessageInput.group_id,
+      });
+      resolve();
     });
   }
 
-  static async getGroupMembers(mlsGroup: MLSGroup) {
+  static async getGroupMembers(group_id: string) {
     const nativeF = NativeModules.OpenMLS.getGroupMembers;
     return new Promise<string[]>((resolve, reject) => {
       nativeF(
         {
-          mls_group: mlsGroup,
+          group_id: group_id,
         },
         (res: string) => {
           if (res) {
