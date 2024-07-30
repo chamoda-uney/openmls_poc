@@ -98,7 +98,9 @@ const ChatListScreenAppBar = () => {
 
   return (
     <Appbar.Header>
-      <Appbar.Content title={`${registerdUser.name}'s MLS Chats`} />
+      {registerdUser && (
+        <Appbar.Content title={`${registerdUser.name}'s MLS Chats`} />
+      )}
       {isUserRegistered && (
         <Appbar.Action onPress={handleOnPress} icon="plus" />
       )}
