@@ -49,6 +49,9 @@ export default class StorageService {
   static saveApplicationMessage(
     saveApplicationMessageInput: SaveApplicationMessageInput,
   ) {
+    if (saveApplicationMessageInput.payload === '') {
+      return;
+    }
     const realm = RealmHolder.get();
     return realm.write(() => {
       return realm.create(Message, {

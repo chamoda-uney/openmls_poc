@@ -175,7 +175,7 @@ export default class SdkService {
   static async sendApplicationMessage(
     groupId: string,
     message: string,
-  ): Promise<Message> {
+  ): Promise<Message | undefined> {
     //get the registered user
     const registeredUser = getRegisteredUser();
 
@@ -307,6 +307,15 @@ export default class SdkService {
         ignore_for_users: [opponentUsername],
       },
     });
+
+    /**
+     * TODO this is a little hack (sending an empty message)to cover a bug, when sent invites from 3rd user onwards, without sending a message, app will crash with AeadError [MLS] when sending an Application Message
+     * But in MLS Test in rust library, it works fine
+     * Recheck the application level code again to fix the crash
+     */
+    setTimeout(async () => {
+      await this.sendApplicationMessage(groupId, '');
+    }, 200);
 
     return group;
   }
