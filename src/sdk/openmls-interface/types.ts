@@ -2,7 +2,6 @@
 interface KeyPackage {}
 interface Signer {}
 interface CredentialWithKey {}
-interface MLSGroup {}
 interface SerializedMessage {}
 
 interface RegisteredUserData {
@@ -14,7 +13,6 @@ interface RegisteredUserData {
 interface InvitedMemberData {
   serialized_welcome_out: SerializedMessage;
   serialized_mls_message_out: SerializedMessage;
-  mls_group: MLSGroup;
 }
 
 //input data types for swift NativeModule
@@ -27,10 +25,14 @@ interface CreateGroupInput {
   registered_user_data: RegisteredUserData;
 }
 
+interface CreateKeyPackageInput {
+  registered_user_data: RegisteredUserData;
+}
+
 interface InviteMemberInput {
+  group_id: string;
   member_key_package: KeyPackage;
   registered_user_data: RegisteredUserData;
-  mls_group: MLSGroup;
 }
 
 interface CreateGroupFromWelcomeInput {
@@ -38,18 +40,18 @@ interface CreateGroupFromWelcomeInput {
 }
 
 interface CreateApplicationMessageInput {
-  mls_group: MLSGroup;
+  group_id: string;
   registered_user_data: RegisteredUserData;
   message: string;
 }
 
 interface ProcessApplicationMessageInput {
-  mls_group: MLSGroup;
+  group_id: string;
   serialized_application_message: SerializedMessage;
 }
 
 interface ProcessCommitMessageInput {
-  mls_group: MLSGroup;
+  group_id: string;
   serialized_commit_message: SerializedMessage;
 }
 
@@ -57,7 +59,7 @@ export type {
   KeyPackage,
   Signer,
   CredentialWithKey,
-  MLSGroup,
+  CreateKeyPackageInput,
   SerializedMessage,
   RegisterUserInput,
   CreateGroupInput,

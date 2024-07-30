@@ -20,7 +20,6 @@ class User extends Realm.Object<User> {
 class Group extends Realm.Object<Group> {
   groupId!: string;
   name!: string;
-  mlsGroup!: string;
   welcomeMessageId?: number;
 
   static schema: ObjectSchema = {
@@ -29,7 +28,6 @@ class Group extends Realm.Object<Group> {
     properties: {
       groupId: 'string',
       name: 'string',
-      mlsGroup: 'string',
       welcomeMessageId: 'int?',
     },
   };

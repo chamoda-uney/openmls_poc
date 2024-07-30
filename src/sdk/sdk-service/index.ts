@@ -10,11 +10,7 @@ import {
   RegisteredUserProfile,
   User,
 } from '../storage-service/schema';
-import {
-  KeyPackage,
-  MLSGroup,
-  RegisteredUserData,
-} from '../openmls-interface/types';
+import {KeyPackage, RegisteredUserData} from '../openmls-interface/types';
 import {getRegisteredUser} from './helper';
 import uuid from 'react-native-uuid';
 import {Results} from 'realm';
@@ -94,6 +90,15 @@ export default class SdkService {
   }
 
   /**
+   * get the registered user profile
+   *
+   * @return {RegisteredUserProfile} Returns true if the user is registered, false otherwise.
+   */
+  static getRegisteredUser(): RegisteredUserProfile {
+    return StorageService.default.getRegisteredUserProfile();
+  }
+
+  /**
    * Creates a group with the specified name and invites an opponent user.
    *
    * @param {string} groupName - The name of the group to be created.
@@ -117,7 +122,7 @@ export default class SdkService {
 
     const group_id = uuid.v4().toString();
 
-    const mlsGroup = await OpenMLSInterface.default.createGroup({
+    await OpenMLSInterface.default.createGroup({
       group_id: group_id.toString(),
       registered_user_data: JSON.parse(
         registeredUser.registeredUserData,
@@ -128,12 +133,11 @@ export default class SdkService {
     StorageService.default.saveGroup({
       groupId: group_id,
       name: groupName,
-      mlsGroup: JSON.stringify(mlsGroup),
     });
 
     //invite the opponent user
     const invitedMemberData = await OpenMLSInterface.default.inviteMember({
-      mls_group: mlsGroup,
+      group_id: group_id,
       registered_user_data: JSON.parse(
         registeredUser.registeredUserData,
       ) as RegisteredUserData,
@@ -144,7 +148,6 @@ export default class SdkService {
     const group = StorageService.default.saveGroup({
       groupId: group_id,
       name: groupName,
-      mlsGroup: JSON.stringify(invitedMemberData.mls_group),
     });
 
     // send the group invite message
@@ -193,7 +196,7 @@ export default class SdkService {
         registered_user_data: JSON.parse(
           registeredUser.registeredUserData,
         ) as RegisteredUserData,
-        mls_group: JSON.parse(group.mlsGroup) as MLSGroup,
+        group_id: group.groupId,
         message: message,
       });
 
@@ -240,9 +243,8 @@ export default class SdkService {
    */
   static async getGroupMemberUsernames(groupId: string): Promise<string[]> {
     const group = this.getSavedGroup(groupId);
-    const mlsGroup = JSON.parse(group.mlsGroup) as MLSGroup;
     const memberUsernames = await OpenMLSInterface.default.getGroupMembers(
-      mlsGroup,
+      group.groupId,
     );
     return memberUsernames;
   }
@@ -260,24 +262,27 @@ export default class SdkService {
   ): Promise<Group> {
     let group = this.getSavedGroup(groupId);
     const registeredUser = getRegisteredUser();
+
+    //update the opponent in local storage to get their latest key package
+    await this.getUpdatedOpponentKeyPackage(opponentUsername);
+
     const opponent = StorageService.default.getPublicUser(opponentUsername);
 
     const invitedMemberData = await OpenMLSInterface.default.inviteMember({
-      mls_group: JSON.parse(JSON.parse(group.mlsGroup)) as MLSGroup,
+      group_id: group.groupId,
       registered_user_data: JSON.parse(
         registeredUser.registeredUserData,
       ) as RegisteredUserData,
-      member_key_package: JSON.parse(opponent.keyPackage) as KeyPackage,
+      member_key_package: opponent.keyPackage as KeyPackage,
     });
 
-    const {mls_group, serialized_mls_message_out, serialized_welcome_out} =
+    const {serialized_mls_message_out, serialized_welcome_out} =
       invitedMemberData;
 
     //save the group in storage (after adding the member)
     group = StorageService.default.saveGroup({
       groupId: groupId,
       name: group.name,
-      mlsGroup: JSON.stringify(mls_group),
     });
 
     // send the group invite message
@@ -304,5 +309,23 @@ export default class SdkService {
     });
 
     return group;
+  }
+
+  /**
+   * Retrieves the updated key package for the opponent with the specified username.
+   *
+   * @param {string} opponentUsername - The username of the opponent.
+   * @return {Promise<User>} A promise that resolves to the updated public user object.
+   */
+  static async getUpdatedOpponentKeyPackage(
+    opponentUsername: string,
+  ): Promise<User> {
+    const opponent = await DeliveryService.default.getUser(opponentUsername);
+    const publicUser = StorageService.default.upsertPublicUser({
+      name: opponent.name,
+      username: opponent.username,
+      keyPackage: opponent.keyPackage as KeyPackage,
+    });
+    return publicUser;
   }
 }
