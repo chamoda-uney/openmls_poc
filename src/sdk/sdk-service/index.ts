@@ -144,7 +144,7 @@ export default class SdkService {
       registered_user_data: JSON.parse(
         registeredUser.registeredUserData,
       ) as RegisteredUserData,
-      member_key_package: JSON.parse(opponent.keyPackage) as KeyPackage,
+      member_key_package: opponent.keyPackage as KeyPackage,
     });
 
     //save the group in storage (after adding the member)
