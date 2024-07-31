@@ -113,6 +113,9 @@ export default class SdkService {
     //get the registered user
     const registeredUser = getRegisteredUser();
 
+    //update the opponent in local storage to get their latest key package
+    await this.getUpdatedOpponentKeyPackage(opponentUsername);
+
     //get the opponent key package
     const opponent = StorageService.default.getPublicUser(opponentUsername);
 
