@@ -12,7 +12,6 @@ import React, {useEffect} from 'react';
 import {
   adaptNavigationTheme,
   DefaultTheme,
-  MD3LightTheme,
   PaperProvider,
 } from 'react-native-paper';
 import {NavigationTheme} from 'react-native-paper/lib/typescript/types';
@@ -31,6 +30,7 @@ import AddNewMemberScreen, {
   AddNewMemberScreenAppBar,
 } from './src/screens/AddNewMemberScreen';
 import {LogBox} from 'react-native';
+import theme from './theme';
 
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -52,8 +52,9 @@ function App(): React.JSX.Element {
   useEffect(() => {
     init();
   }, []);
+
   return (
-    <PaperProvider theme={MD3LightTheme}>
+    <PaperProvider theme={theme}>
       {initializing ? (
         <></>
       ) : (
