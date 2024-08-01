@@ -1,10 +1,11 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {Group} from '../sdk/storage-service/schema';
 import {Avatar, Text} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import screens from '../screens/navigations';
 import useChatList from '../hooks/useChatList';
+import LastMessage from './LastMessage';
 
 export type GroupListItemProps = {group: Group};
 
@@ -28,7 +29,12 @@ const GroupListItem: React.FC<GroupListItemProps> = ({group}) => {
       }}
       onPress={handleTouch}>
       <Avatar.Text size={48} label={`${group.name[0].toUpperCase()}`} />
-      <Text variant="bodyLarge">{group.name}</Text>
+      <View>
+        <Text style={{fontWeight: 'bold'}} variant="bodyLarge">
+          {group.name}
+        </Text>
+        <LastMessage group={group} />
+      </View>
     </TouchableOpacity>
   );
 };
