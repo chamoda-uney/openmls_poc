@@ -135,6 +135,11 @@ export default class StorageService {
     return realm.objects(Message).filtered('_groupId = $0', groupId);
   }
 
+  static getUnfilteredApplicationMessages() {
+    const realm = RealmHolder.get();
+    return realm.objects(Message);
+  }
+
   static getLastMessageOfGroup(groupId: string) {
     const realm = RealmHolder.get();
     return realm
