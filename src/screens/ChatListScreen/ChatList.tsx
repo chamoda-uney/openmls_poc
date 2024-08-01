@@ -5,7 +5,9 @@ import {StorageService} from '../../sdk';
 import {Group} from '../../sdk/storage-service/schema';
 
 const ChatList = () => {
-  const groupsRealm = StorageService.default.getGroups();
+  const groupsRealm = StorageService.default
+    .getGroups()
+    .sorted('_lastMessage._id', false);
 
   const loadGroups = () => {
     const _groups: Group[] = [];
