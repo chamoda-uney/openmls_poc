@@ -11,18 +11,18 @@ import {DELIVERY_SERVICE_BASE_URL} from '../delivery-service';
 import {BroadCastedMessage} from './types';
 
 export default class SyncService {
-  static isSyncing = false;
+  //static isSyncing = false;
 
   static async sync() {
     if (StorageService.default.getRegisteredUserProfile() === undefined) {
       return;
     }
 
-    if (SyncService.isSyncing) {
+    /*  if (SyncService.isSyncing) {
       return;
-    }
+    } */
 
-    this.isSyncing = true;
+    /*  this.isSyncing = true; */
     const registeredUser = getRegisteredUser();
 
     const messages = await DeliveryService.default.getMessages(
@@ -33,7 +33,7 @@ export default class SyncService {
       await this.processMessage(message);
     }
 
-    this.isSyncing = false;
+    /*  this.isSyncing = false; */
   }
 
   static async processMessage(message: MessageEntity) {
