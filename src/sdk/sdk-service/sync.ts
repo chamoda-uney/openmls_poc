@@ -30,7 +30,7 @@ export default class SyncService {
     );
 
     for (const message of messages) {
-      this.processMessage(message);
+      await this.processMessage(message);
     }
 
     this.isSyncing = false;
