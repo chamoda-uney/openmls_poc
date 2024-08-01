@@ -6,8 +6,6 @@ import {Group} from '../../sdk/storage-service/schema';
 
 const ChatList = () => {
   const groupsRealm = StorageService.default.getGroups();
-  const messageRealm =
-    StorageService.default.getUnfilteredApplicationMessages();
 
   const loadGroups = () => {
     const _groups: Group[] = [];
@@ -28,11 +26,6 @@ const ChatList = () => {
         setGroups(loadGroups());
       });
       changes.newModifications.forEach(() => {
-        setGroups(loadGroups());
-      });
-    });
-    messageRealm.addListener((_messages, changes) => {
-      changes.insertions.forEach(() => {
         setGroups(loadGroups());
       });
     });

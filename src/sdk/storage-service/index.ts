@@ -53,7 +53,7 @@ export default class StorageService {
       return;
     }
     const realm = RealmHolder.get();
-    return realm.write(() => {
+    const message = realm.write(() => {
       return realm.create(Message, {
         _id: new Realm.BSON.ObjectId(),
         createdUsername: saveApplicationMessageInput.createdUsername,
@@ -65,6 +65,16 @@ export default class StorageService {
           : undefined,
       });
     });
+
+    //update the group for last message
+    realm.write(() => {
+      const group = realm
+        .objects(Group)
+        .filtered(`groupId = "${saveApplicationMessageInput.groupId}"`);
+      group[0]._lastMessage = message;
+    });
+
+    return message;
   }
 
   static upsertPublicUsers(savePublicUserInput: SavePublicUserInput[]) {

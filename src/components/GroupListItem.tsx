@@ -33,7 +33,7 @@ const GroupListItem: React.FC<GroupListItemProps> = ({group}) => {
         <Text style={{fontWeight: 'bold'}} variant="bodyLarge">
           {group.name}
         </Text>
-        <LastMessage group={group} />
+        <LastMessage lastMessage={group._lastMessage} />
       </View>
     </TouchableOpacity>
   );

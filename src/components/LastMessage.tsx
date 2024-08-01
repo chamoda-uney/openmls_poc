@@ -1,17 +1,12 @@
 import React, {useMemo} from 'react';
-import {Group} from '../sdk/storage-service/schema';
+import {Message} from '../sdk/storage-service/schema';
 import {Text, useTheme} from 'react-native-paper';
-import {StorageService} from '../sdk';
 import {getRegisteredUser} from '../sdk/sdk-service/helper';
 import {View} from 'react-native';
 
-export type LastMessageProps = {group: Group};
+export type LastMessageProps = {lastMessage?: Message};
 
-const LastMessage: React.FC<LastMessageProps> = ({group}) => {
-  const lastMessage = StorageService.default.getLastMessageOfGroup(
-    group.groupId,
-  );
-
+const LastMessage: React.FC<LastMessageProps> = ({lastMessage}) => {
   if (!lastMessage) {
     return null;
   }

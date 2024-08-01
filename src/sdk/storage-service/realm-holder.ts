@@ -13,6 +13,7 @@ export default class RealmHolder {
       }
       Realm.open({
         schema: [User, Group, Message, RegisteredUserProfile],
+        schemaVersion: 2,
       })
         .then(r => {
           RealmHolder.realm = r;

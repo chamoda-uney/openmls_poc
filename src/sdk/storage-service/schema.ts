@@ -22,6 +22,9 @@ class Group extends Realm.Object<Group> {
   name!: string;
   welcomeMessageId?: number;
 
+  //relationships
+  _lastMessage?: Message;
+
   static schema: ObjectSchema = {
     primaryKey: 'groupId',
     name: 'Group',
@@ -29,6 +32,7 @@ class Group extends Realm.Object<Group> {
       groupId: 'string',
       name: 'string',
       welcomeMessageId: 'int?',
+      _lastMessage: 'Message?',
     },
   };
 }
